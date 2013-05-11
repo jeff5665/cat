@@ -1,4 +1,4 @@
-﻿var JApp=(function($){
+﻿/*var JApp=(function($){
     function init(){
         var currentRoute=getRoute();
         setTimeout(function(){
@@ -58,39 +58,21 @@
         run:run,
         getRoute:getRoute
     };
-})(jQuery);
+})(jQuery);*/
 
 var GamePlugn=(function($){
-    var config={
+    var config={//
       UI:{
-          btn:{
+          btn:{//配置按钮
               autoBattle:{
                   btnName:'一键打野'
               }
           }
       },
-      JEvent:{
+      JEvent:{//配置事件，需要和按钮名相同
           autoBattle:{
               click:function(e){
-                   $('#mainmap').find('area').each(function(){
-                       var _alt=$(this).attr('alt');
-                       if($.inArray(_alt,autoBattleType)>-1){//找到自动打野的目标
-                           console.log('找到自动打野的目标');
-                           var _id=$(this).parent().parent().attr('id').replace('dialog','detail');
-                           $(this).parent().parent().click();
-                           setTimeout(function(){
-                               $('#'+_id).find('.quest-ok-button').find('img').click();
-                                 setTimeout(function(){
-                                     $('#dialog_g').click();
-                                     setTimeout(function(){
-                                         $('#btl-ok-button').click();
-                                     },50);
-                                 },1000);
-                           },50);
-
-                           return false;
-                       }
-                   });
+                  autoBattle();
               }
           }
       }
@@ -100,11 +82,11 @@ var GamePlugn=(function($){
         initUI(config.UI);
         initBindEvent(config.JEvent);
     };
-    var initUI=function(ui){
+    var initUI=function(ui){//初始化UI
         var _id,_name,_uiHtml='';
         var _template_BTN='<button id="@id">@name</button>';
         var _template;
-        for(_id in ui.btn){
+        for(_id in ui.btn){  //遍历按钮生成按钮HTML
             _name=ui.btn[_id].btnName;
             _template=_template_BTN;
             _template=_template.replace('@id',_id);
@@ -114,14 +96,37 @@ var GamePlugn=(function($){
         $('body').prepend(_uiHtml);
 
     };
-    var initBindEvent=function(jEvent){
+    var initBindEvent=function(jEvent){//初始化绑事件
         var _id,_eventType;
-        for(_id in jEvent){
-            for(_eventType in jEvent[_id]){
+        for(_id in jEvent){ //遍历所有需要绑事件的id
+            for(_eventType in jEvent[_id]){ //给当前id对象绑定所有配置事件
                 $('#'+_id).on(_eventType,jEvent[_id][_eventType]);
             }
         }
     };
+
+    var autoBattle=function(){ //自动打野
+        $('#mainmap').find('area').each(function(){
+            var _alt=$(this).attr('alt');
+            if($.inArray(_alt,autoBattleType)>-1){//找到自动打野的目标
+                console.log('找到自动打野的目标');
+                var _id=$(this).parent().parent().attr('id').replace('dialog','detail');
+                $(this).parent().parent().click();
+                setTimeout(function(){
+                    $('#'+_id).find('.quest-ok-button').find('img').click();
+                    setTimeout(function(){
+                        $('#dialog_g').click();
+                        setTimeout(function(){
+                            $('#btl-ok-button').click();
+                        },50);
+                    },1000);
+                },50);
+
+                return false;//退出each循环
+            }
+        });
+    }
+
     return {
         init:init
     }
