@@ -12,9 +12,11 @@
 <body>
 <div class="row-fluid">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab1" data-toggle="tab">Tab1</a></li>
-        <li><a href="#tab2" data-toggle="tab">Tab2</a></li>
-        <li><a href="#tab3" data-toggle="tab">Tab3</a></li>
+        <li class="active"><a href="#tab1" data-toggle="tab">建造</a></li>
+        <li><a href="#tab2" data-toggle="tab">打怪</a></li>
+        <li><a href="#tab3" data-toggle="tab">编队</a></li>
+        <li><a href="#tab4" data-toggle="tab">交易所</a></li>
+        <li><a href="#tab5" data-toggle="tab">卡片</a></li>
     </ul>
     <div class="span12 tab-content">
         <div class="tab-pane active" id="tab1">
@@ -27,19 +29,78 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1</td>
-                        <td>2</td>
+                        <td>自动升级粮仓</td>
+                        <td><input type="checkbox"/></td>
+                    </tr>
+                    <tr>
+                        <td>自动升级五行</td>
+                        <td>
+                            火 <input type="checkbox"/>
+                            风 <input type="checkbox"/>
+                            水 <input type="checkbox"/>
+                            木 <input type="checkbox"/>
+                            空 <input type="checkbox"/>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="tab-pane" id="tab2">
-
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>功能名</th>
+                    <th>选项</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>自动打怪</td>
+                    <td>
+                        出城<input type="radio"/>
+                        打野<input type="radio" />
+                        什么都不做<input type="radio" />
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
         <div class="tab-pane" id="tab3">
 
         </div>
+        <div class="tab-pane" id="tab4">
 
+        </div>
+        <div class="tab-pane" id="tab5">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>功能名</th>
+                    <th>选项</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>自动养成</td>
+                    <td>
+                       极(1xxx) <input type="checkbox" />
+                       稀(2xxx) <input type="checkbox"/>
+                       珍(3xxx) <input type="checkbox"/>
+                       普(4xxx) <input type="checkbox"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>自动合成</td>
+                    <td>
+                        极(1xxx) <input type="checkbox" />
+                        稀(2xxx) <input type="checkbox"/>
+                        珍(3xxx) <input type="checkbox"/>
+                        普(4xxx) <input type="checkbox"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 </body>
