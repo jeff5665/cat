@@ -9,10 +9,10 @@ $(function(){
 //chrome.browserAction.setBadgeBackgroundColor({color:[0, 200, 0, 100]});
 chrome.extension.onMessage.addListener(
     function(request, sender, sendResponse) {
-        if(request.action ==="saveMyDeck"){
-            //localStorage.setItem(request.lordName,request.deck);
+        if(request.action ==="saveGameConfig"){
+            localStorage[request['localKeyName']]=request['localValue'];
         }
-        if(request.action==="getAllDeck"){
+        if(request.action==="getGameConfig"){
 
         }
     });

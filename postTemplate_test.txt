@@ -1,0 +1,53 @@
+------------------------------------------------------
+Request URL:http://nyashindig.86game.com/shindig/gadgets/makeRequest
+Request Method:POST
+Status Code:200 OK200 OK
+Request Headersview source
+Accept:*/*
+ Accept-Encoding:gzip,deflate,sdch
+ Accept-Language:zh-CN,zh;q=0.8
+ Connection:keep-alive
+ Content-Length:741
+ Content-Type:application/x-www-form-urlencoded
+ Cookie:LoginCookie=C%00z%00c%00G%00N%00w%00c%00y%00A%00z%005%00y%00Q%00Q%00Y%00w%00d%00z%00Z%009%00S%00Q%00Y%002%00B%00z%00d%00w%00O%00A%00V%00A%00A%00U%005%001%00P%00n%00A%001%00A%00k%00c%00B%00M%00Q%00R%00C%00A%00j%00M%00A%00P%00X%00d%00H%00B%00E%00U%00E%00Q%00A%000%00%2f%00d%00U%00Q%00O%00O%00g%00F%00K%00A%00E%00R%00w%00N%00A%001%00K%00d%00E%00V%00w%00R%00w%00t%00X%00B%00g%00c%00H%00Z%00w%00N%000%00c%00k%004%00G%00N%003%00d%00K%00f%00U%00Q%00G%00R%00Q%00c%003%00c%00E%000%00F%00R%00A%00E%004%00d%00W%005%00w%00Z%00g%00I%00d%00A%00U%00Y%00E%00F%00w%00J%00q%00A%00G%00B%003%00P%00w%00Q%00b%00B%00G%00E%00N%00a%003%00V%00m%00D%00j%00s%00B%00O%00g%00B%00D%00c%00D%00I%00%3d%00
+ Host:nyashindig.86game.com
+ Origin:http://nyashindig.86game.com
+ Referer:http://nyashindig.86game.com/shindig/gadgets/ifr?&parent=86game.com/gameindex.aspx&url=http://nobunyaga.86game.com/gadget.xml&st=7E372EFAE412413B8B91282FFC69F69560B6AE0512015E0E1F90788162A3C527621001EE2B131FEC20E39A943EBE5FFDEB992E489E75BB6F2FDA3CD3745100E3B68888592011F53D9235FED9E078CE72A5A6530918CA20E6FBCD6593BCBD9BB2198AFF3939FF452F18951FA25E7330DA6164CF373183BEC7E6D0A8EAF741701F983507063EEBDF445F9749F02C9EBB50A53B57715265AB16423675161D97EB35C2532FAB73CB5704D2D51D6FF0C33AAB
+ User-Agent:Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1469.0 Safari/537.36
+  --------------------------------------------------
+   Request URL:http://86game.com/GameIndex.aspx?ServerID=2
+   Request Method:POST
+   Status Code:200 OK200 OK
+   Request Headersview source
+   Accept:*/*
+   Accept-Encoding:gzip,deflate,sdch
+   Accept-Language:zh-CN,zh;q=0.8
+   Connection:keep-alive
+   Content-Length:0
+   Cookie:ASP.NET_SessionId=5knmthqgpzamu1i1sraektcw; LoginCookie=C%00z%00c%00G%00N%00w%00c%00y%00A%00z%005%00y%00Q%00Q%00Y%00w%00d%00z%00Z%009%00S%00Q%00Y%002%00B%00z%00d%00w%00O%00A%00V%00A%00A%00U%005%001%00P%00n%00A%001%00A%00k%00c%00B%00M%00Q%00R%00C%00A%00j%00M%00A%00P%00X%00d%00H%00B%00E%00U%00E%00Q%00A%000%00%2f%00d%00U%00Q%00O%00O%00g%00F%00K%00A%00E%00R%00w%00N%00A%001%00K%00d%00E%00V%00w%00R%00w%00t%00X%00B%00g%00c%00H%00Z%00w%00N%000%00c%00k%004%00G%00N%003%00d%00K%00f%00U%00Q%00G%00R%00Q%00c%003%00c%00E%000%00F%00R%00A%00E%004%00d%00W%005%00w%00Z%00g%00I%00d%00A%00U%00Y%00E%00F%00w%00J%00q%00A%00G%00B%003%00P%00w%00Q%00b%00B%00G%00E%00N%00a%003%00V%00m%00D%00j%00s%00B%00O%00g%00B%00D%00c%00D%00I%00%3d%00
+   Host:86game.com
+   Origin:http://86game.com
+   Referer:http://86game.com/GameIndex.aspx?ServerID=2
+   User-Agent:Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1469.0 Safari/537.36
+   X-Requested-With:XMLHttpRequest
+   --------------------------------------------
+   Form Dataview sourceview URL encoded
+
+
+
+    url:http://nobunyaga.86game.com/battle/setup.htm
+    httpMethod:POST
+    headers:Content-Type=application%2Fx-www-form-urlencoded
+    postData:enemy_id=87530&mc=0
+    authz:signed
+    st:7E372EFAE412413B8B91282FFC69F69560B6AE0512015E0E1F90788162A3C527621001EE2B131FEC20E39A943EBE5FFDEB992E489E75BB6F2FDA3CD3745100E3B68888592011F53D9235FED9E078CE72A5A6530918CA20E6FBCD6593BCBD9BB2198AFF3939FF452F18951FA25E7330DA6164CF373183BEC7E6D0A8EAF741701F983507063EEBDF445F9749F02C9EBB50A53B57715265AB16423675161D97EB35C2532FAB73CB5704D2D51D6FF0C33AAB
+    contentType:TEXT
+    numEntries: 3
+    getSummaries:false
+    signOwner:true
+    signViewer:true
+    gadget:http://nobunyaga.86game.com/gadget.xml
+    container:default
+    bypassSpecCache:
+    getFullHeaders:false
+    oauthState:
