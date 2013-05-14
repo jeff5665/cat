@@ -1,11 +1,10 @@
 ﻿var GamePlugn=(function($,U){
+    var gameConfig={};
     var GameMustData=(function(){
         var st=(location.href.match(/st=([0-9a-zA-Z]+)#rpctoken/)||[])[1];
         if(st===undefined){
            alert('初始必要信息失败');
         }
-
-
         return {
             st:st
         }
@@ -38,8 +37,33 @@
                  }
             });
 
+        },
+        postToCountryBattle:function(callBack){
+            var reqData={
+                url:'http://nobunyaga.86game.com/battle/mock_setup.htm',
+                httpMethod:'POST',
+                headers:'Content-Type=application%2Fx-www-form-urlencoded',
+                postData:'action=btl',
+                authz:'signed',
+                st:GameMustData.st,
+                contentType:'TEXT',
+                numEntries:3,
+                getSummaries:false,
+                signOwner:true,
+                signViewer:true,
+                gadget:'http://nobunyaga.86game.com/gadget.xml',
+                container:'default',
+                bypassSpecCache:'',
+                getFullHeaders:'false',
+                oauthState:''
+            };
+            $.post('http://nyashindig.86game.com/shindig/gadgets/makeRequest',reqData,function(result){
+                if(typeof callBack ==='function'){
+                    callBack(result);
+                }
+            });
         }
-    }
+    };
     var config={//
       UI:{
           btn:{//配置按钮
@@ -75,9 +99,50 @@
                 $('#'+_id).on(_eventType,jEvent[_id][_eventType]);
             }
         }
+
+        $('body').on('noAttackTarget',function(e){
+            noAttackTargetHandler(gameConfig,CatRequest);
+        });
     };
 
-    var oneKeyAutoFindBattle=function(){ //一键自动寻找目标打野
+    /**
+     * 未发现战斗对象时的处理函数
+     * “国战”与“打野”同时勾上时才可能会触发
+     * @param config
+     * @param req
+     */
+    var noAttackTargetHandler=function(config,req){
+        if(config.battle.country===true&&config.battle.field===true){
+            req.postToCountryBattle(function(result){
+                console.log('noAttackTargetHandler finish');
+            });
+        }
+    };
+
+    /**
+     * 只去打国战
+     * 只有“国战”勾选 “打野”不勾才触发
+     * @param config
+     * @param req
+     */
+    var goCountryBattle=function(config,req){
+        if(config.battle.country===true&&config.battle.field===false){
+            $('#villagemap').each(function(){//在村庄时
+                req.postToCountryBattle(function(result){
+                    console.log('goCountryBattle finish');
+                });
+            });
+        }
+    }
+
+    /**
+     * 一键自动寻找目标打野
+     */
+    var oneKeyAutoFindBattle=function(config){
+        if(config.battle.field!==true){
+            console.log('打野未勾选，因此不执行自动寻找目标打野');
+            return;
+        }
         var _findTarget=false;
         if($('#notify_count_main').length>0){
           console.log('部队行动中，无法执行自动寻找目标打怪');
@@ -111,6 +176,7 @@
                 }
             });
             if(!_findTarget){
+                  $('body').trigger('noAttackTarget');
                   console.log('未发现可攻击目标');
             }
         }
@@ -118,28 +184,48 @@
     };
 
     /**
+     * 20130513
+     * 新增根据配置判断是否执行一键打野
+     * ------------------------
      * 每隔一定时间自动执行
      * @param num
      */
     var runAuto=function(num){
         var _num=num||0;
+
         setTimeout(function(){
-           // U.unsafeWindow.nobunyaga_ajax({type:"get",url:'/area_map.htm'});
-            console.log($('#dmenu').find('li.topitem'));
-            $('#dmenu').find('li.topitem').eq(_num%2).find('a').find('img').click();
-            // $('#dmenu').find('li').eq(_num%2).click().find('a').click().find('img').click();
+            if(gameConfig.autoChangePage){
+                $('#dmenu').find('li.topitem').eq(_num%2).find('a').find('img').click();
+            }
             setTimeout(function(){
-                oneKeyAutoFindBattle();
+                oneKeyAutoFindBattle(gameConfig);
+                goCountryBattle(gameConfig,CatRequest);
+                console.log('runAuto');
             },3000);
             _num++;
             runAuto(_num);
         },30000);
     };
 
+
+    /**
+     * 初始游戏配置，从发送消息给background
+     * 接受到{JSON} data游戏配置对象后再执行callback
+     * 异步执行callback
+     * @param callBack
+     */
+    var initGameConfig=function(callback){
+        chrome.runtime.sendMessage({action:'getGameConfig'},function(data){
+            gameConfig=data;
+            console.log('@initGameConfig',gameConfig);
+            callback();
+        });
+    };
+
     var init=function(){
         initUI(config.UI);
         initBindEvent(config.JEvent);
-        runAuto();
+        initGameConfig(runAuto);
     };
 
     return {

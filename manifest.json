@@ -3,7 +3,7 @@
   "version" : "0.0.1",
   "description" : "信猫 Chrome 专用的插件",
   "background" : {
-    "scripts": ["lib/jquery.js","js/background.js"]
+    "scripts": ["lib/jquery.js","js/DefaultConfig.js","js/background.js"]
   },
   "content_scripts": [
     {

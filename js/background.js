@@ -1,24 +1,40 @@
-﻿// Copyright (c) 2011 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+﻿(function($,defaultConfig){
+    $(function () {
+        var gameConfig = {};
 
-// Called when the user clicks on the browser action.
+        var requestHandler = {
+            saveGameConfig: function (req) {
 
-$(function(){
+            },
+            saveBattleConfig: function (req, sender, sendResponse) {//保存战斗配置
+                gameConfig.battle = req.battle;
+                localStorage['GameConfig'] = JSON.stringify(gameConfig);
+            },
+            getGameConfig: function (req, sender, sendResponse) {
+                sendResponse(gameConfig);
+            }
+        };
 
-//chrome.browserAction.setBadgeBackgroundColor({color:[0, 200, 0, 100]});
-chrome.extension.onMessage.addListener(
-    function(request, sender, sendResponse) {
-        if(request.action ==="saveGameConfig"){
-            localStorage[request['localKeyName']]=request['localValue'];
+
+        if (localStorage['GameConfig'] === undefined) {
+            gameConfig = defaultConfig;
+            localStorage['GameConfig'] = JSON.stringify(defaultConfig);
+        } else {
+            gameConfig = JSON.parse(localStorage['GameConfig']);
         }
-        if(request.action==="getGameConfig"){
 
-        }
+
+        chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+            console.log(2);
+            requestHandler[request.action](request,sender,sendResponse);//根据request.action执行相应处理，request为参数
+        });
+
+
     });
 
 
 
+})(jQuery,DefaultConfig);
 
 
-});
+

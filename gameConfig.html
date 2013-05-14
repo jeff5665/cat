@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="css/gameConfig.css"/>
     <script src="lib/jquery.js" ></script>
     <script src="lib/bootstrap/js/bootstrap.js" ></script>
+    <script src="js/DefaultConfig.js" ></script>
+    <script src="js/gameConfigPage.js"></script>
 </head>
 <body>
 <div class="row-fluid">
@@ -17,6 +19,7 @@
         <li><a href="#tab3" data-toggle="tab">编队</a></li>
         <li><a href="#tab4" data-toggle="tab">交易所</a></li>
         <li><a href="#tab5" data-toggle="tab">卡片</a></li>
+        <li><a href="#tab6" data-toggle="tab">其他</a></li>
     </ul>
     <div class="span12 tab-content">
         <div class="tab-pane active" id="tab1">
@@ -57,9 +60,9 @@
                 <tr>
                     <td>自动打怪</td>
                     <td>
-                        出城<input type="radio"/>
-                        打野<input type="radio" />
-                        什么都不做<input type="radio" />
+                        国战<input type="checkbox" id="country"/>
+                        打野<input type="checkbox" id="field" />
+                        合战<input type="checkbox" id="battle" />
                     </td>
                 </tr>
                 </tbody>
@@ -96,6 +99,24 @@
                         稀(2xxx) <input type="checkbox"/>
                         珍(3xxx) <input type="checkbox"/>
                         普(4xxx) <input type="checkbox"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane" id="tab6">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>功能名</th>
+                    <th>选项</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>自动切换页面</td>
+                    <td>
+                        <input type="checkbox" id="autoChangePage" />
                     </td>
                 </tr>
                 </tbody>
