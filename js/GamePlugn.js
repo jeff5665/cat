@@ -1,4 +1,4 @@
-﻿var GamePlugn=(function($,U){
+﻿var GamePlugn=(function($,U,GD){
     var gameConfig={};
     var GameMustData=(function(){
         var st=(location.href.match(/st=([0-9a-zA-Z]+)#rpctoken/)||[])[1];
@@ -69,6 +69,9 @@
           btn:{//配置按钮
               autoBattle:{
                   btnName:'一键打野'
+              },
+              showCardMem:{
+                  btnName:'显示卡片备注'
               }
           }
       },
@@ -76,6 +79,11 @@
           autoBattle:{
               click:function(e){
                   oneKeyAutoFindBattle();
+              }
+          },
+          showCardMem:{
+              click:function(){
+                showCardMem();
               }
           }
       }
@@ -126,8 +134,10 @@
      * @param req
      */
     var goCountryBattle=function(config,req){
+        console.log('@goCountry');
         if(config.battle.country===true&&config.battle.field===false){
             $('#villagemap').each(function(){//在村庄时
+                console.log('goCountryBattle start');
                 req.postToCountryBattle(function(result){
                     console.log('goCountryBattle finish');
                 });
@@ -184,6 +194,22 @@
     };
 
     /**
+     * 显示卡片备注，在“武将一览”页面
+     * 依赖GameData
+     */
+    var showCardMem=function(){
+        var _span,_cardNo,_card;
+        var _template='<span style="position: absolute;top: @toppx;left: @leftpx;text-align: right;z-index: 9999;">@text</span>';
+        $('#content').find('div.work-body').find('>div[style="background:#FFFAE2;"]').each(function(i){
+            _span=$(this).find('span:contains("No.")');
+            _cardNo= $.trim(_span.text()).replace('No.','');
+            _card=GameData.cardInfo[_cardNo];
+            $(this).after(_template.replace('@top',$(this).position().top+6).replace('@left',$(this).position().left+80).replace('@text',_card.mem+' $'+_card.marketPrice));
+        });
+    };
+
+
+    /**
      * 20130513
      * 新增根据配置判断是否执行一键打野
      * ------------------------
@@ -232,5 +258,5 @@
         init:init
     }
 
-})(jQuery,JUtil);
+})(jQuery,JUtil,GameData);
 
