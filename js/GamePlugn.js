@@ -1,4 +1,8 @@
-﻿var GamePlugn=(function($,U,GD){
+﻿var GamePlugn=(function($,U,GD,RM){
+    //$ = Jquery
+    //U = JUtil
+    //GD = GameData
+    //RM = RouteManger
     var gameConfig={};
     var GameMustData=(function(){
         var st=(location.href.match(/st=([0-9a-zA-Z]+)#rpctoken/)||[])[1];
@@ -248,15 +252,26 @@
         });
     };
 
+
+
+
     var init=function(){
+        RM.init();
+        RM.register('/village.htm',function(){
+           console.log('village.htm');
+        });
+        RM.register('/area_map.htm',function(){
+            console.log('area_map.htm');
+        });
         initUI(config.UI);
         initBindEvent(config.JEvent);
         initGameConfig(runAuto);
+
     };
 
     return {
         init:init
     }
 
-})(jQuery,JUtil,GameData);
+})(jQuery,JUtil,GameData,RouteManger);
 
