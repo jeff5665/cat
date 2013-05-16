@@ -4,7 +4,7 @@
  * Time: 上午8:45
  */
 var DefaultConfig = {
-    autoChangePage:false,
+
     battle: {
         country: false,
         field: false,
@@ -13,6 +13,11 @@ var DefaultConfig = {
     build: {},
     deck: {},
     trade: {},
-    card: {}
+    card: {},
+    other:{
+        autoChangePage:false,
+        autoRunInterval:30
+    }
+
 
 };

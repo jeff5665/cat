@@ -1,4 +1,4 @@
-﻿var GamePlugn=(function($,U,GD,RM){
+﻿var GamePlugn=(function($,U,GD,RM,Timer){
     //$ = Jquery
     //U = JUtil
     //GD = GameData
@@ -101,7 +101,11 @@
             _name=ui.btn[_id].btnName;
             _uiHtml+=_template_BTN.replace('@id',_id).replace('@name',_name);
         }
+        //其他ui
+        _uiHtml+='<span id="JTimer"></span>';
         $('body').prepend(_uiHtml);
+
+
 
     };
     var initBindEvent=function(jEvent){//初始化绑事件
@@ -111,11 +115,15 @@
                 $('#'+_id).on(_eventType,jEvent[_id][_eventType]);
             }
         }
-
         $('body').on('noAttackTarget',function(e){
             noAttackTargetHandler(CatRequest);
         });
+        Timer.addFunc(function(t){
+           $('#JTimer').text(t);
+        });
     };
+
+
 
     /**
      * 未发现战斗对象时的处理函数
@@ -213,6 +221,7 @@
     };
 
 
+
     /**
      * 20130513
      * 新增根据配置判断是否执行一键打野
@@ -220,22 +229,8 @@
      * 每隔一定时间自动执行
      * @param num
      */
-    var runAuto=function(num){
-        var _num=num||0;
+    var AutoRunFunc=function(num){
 
-        setTimeout(function(){
-            if(gameConfig.autoChangePage){
-                $('#dmenu').find('li.topitem').eq(_num%2).find('a').each(function(){
-                    RM.changeRoute($(this).attr('href'));
-                    $(this).find('img').click();
-                });
-            }
-            setTimeout(function(){
-                console.log('runAuto');
-            },3000);
-            _num++;
-            runAuto(_num);
-        },30000);
     };
 
 
@@ -255,12 +250,10 @@
 
 
 
-
     var init=function(){
         RM.init();
-        initUI(config.UI);
-        initBindEvent(config.JEvent);
-        initGameConfig(function(gameConfig){
+        initGameConfig(function(){
+            Timer.setCountTotalTime(gameConfig.other.autoRunInterval);
             RM.register('/village.htm',function(){
                 console.log('@village');
                 goCountryBattle();
@@ -269,13 +262,27 @@
                 console.log('@area_map');
                 oneKeyAutoFindBattle();
             });
-            runAuto();
+            RM.register('/card/manage_card.htm',function(){
+                showCardMem();
+            });
+            Timer.addCountFunc(function(times){//自动切换页面
+                if(gameConfig.other.autoChangePage){
+                    $('#dmenu').find('li.topitem').eq(times%2).find('a').each(function(){//在村庄与地图页面来回切换
+                        RM.changeRoute($(this).attr('href'));
+                        $(this).find('img').click();
+                    });
+                }
+            });
+            initUI(config.UI);
+            initBindEvent(config.JEvent);
+            Timer.run();
         });
+
     };
 
     return {
         init:init
     }
 
-})(jQuery,JUtil,GameData,RouteManger);
+})(jQuery,JUtil,GameData,RouteManger,Timer);
 

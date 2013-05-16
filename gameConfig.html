@@ -9,25 +9,25 @@
     <script src="lib/jquery.js" ></script>
     <script src="lib/bootstrap/js/bootstrap.js" ></script>
     <script src="js/DefaultConfig.js" ></script>
-    <script src="js/gameConfigPage.js"></script>
+    <script src="js/pages/gameConfigPage.js"></script>
 </head>
 <body>
 <div class="row-fluid">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab1" data-toggle="tab">建造</a></li>
-        <li><a href="#tab2" data-toggle="tab">打怪</a></li>
-        <li><a href="#tab3" data-toggle="tab">编队</a></li>
-        <li><a href="#tab4" data-toggle="tab">交易所</a></li>
-        <li><a href="#tab5" data-toggle="tab">卡片</a></li>
-        <li><a href="#tab6" data-toggle="tab">其他</a></li>
+        <li class="active"><a href="#build_tab" data-toggle="tab">建造</a></li>
+        <li><a href="#battle_tab" data-toggle="tab">打怪</a></li>
+        <li><a href="#deck_tab" data-toggle="tab">编队</a></li>
+        <li><a href="#trade_tab" data-toggle="tab">交易所</a></li>
+        <li><a href="#card_tab" data-toggle="tab">卡片</a></li>
+        <li><a href="#other_tab" data-toggle="tab">其他</a></li>
     </ul>
     <div class="span12 tab-content">
-        <div class="tab-pane active" id="tab1">
+        <div class="tab-pane active" id="build_tab">
             <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>功能名</th>
-                        <th>选项</th>
+                        <th>选项 <button class="btn btn-danger btn-mini resetConfig" data-key="build"><i class="icon-white icon-adjust"></i> 重置</button></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,12 +48,14 @@
                 </tbody>
             </table>
         </div>
-        <div class="tab-pane" id="tab2">
+        <div class="tab-pane" id="battle_tab">
             <table class="table table-bordered">
                 <thead>
                 <tr>
                     <th>功能名</th>
-                    <th>选项</th>
+                    <th>选项 <button class="btn btn-danger btn-mini resetConfig" data-key="battle">
+                        <i class="icon-white icon-adjust"></i> 重置</button>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -68,18 +70,33 @@
                 </tbody>
             </table>
         </div>
-        <div class="tab-pane" id="tab3">
+        <div class="tab-pane" id="deck_tab">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>功能</th>
+                        <th>选项 <button class="btn btn-danger btn-mini resetConfig" data-key="deck"><i class="icon-white icon-adjust"></i> 重置</button></th>
+                    </tr>
+                </thead>
+            </table>
 
         </div>
-        <div class="tab-pane" id="tab4">
-
+        <div class="tab-pane" id="trade_tab">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>功能</th>
+                    <th>选项 <button class="btn btn-danger btn-mini resetConfig" data-key="trade"><i class="icon-white icon-adjust"></i> 重置</button></th>
+                </tr>
+                </thead>
+            </table>
         </div>
-        <div class="tab-pane" id="tab5">
+        <div class="tab-pane" id="card_tab">
             <table class="table table-bordered">
                 <thead>
                 <tr>
                     <th>功能名</th>
-                    <th>选项</th>
+                    <th>选项 <button class="btn btn-danger btn-mini resetConfig" data-key="card"><i class="icon-white icon-adjust"></i> 重置</button></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -104,17 +121,18 @@
                 </tbody>
             </table>
         </div>
-        <div class="tab-pane" id="tab6">
+        <div class="tab-pane" id="other_tab">
             <table class="table table-bordered">
                 <thead>
                 <tr>
                     <th>功能名</th>
-                    <th>选项</th>
+                    <th>选项 <button class="btn btn-danger btn-mini resetConfig" data-key="other"><i class="icon-white icon-adjust"></i> 重置</button></th>
                 </tr>
                 </thead>
                 <tbody>
+                <tr><td>自动执行间隔</td><td><input id="autoRunInterval" type="number" min="0" value="" /></td></tr>
                 <tr>
-                    <td>自动切换页面</td>
+                    <td>是否自动切换页面</td>
                     <td>
                         <input type="checkbox" id="autoChangePage" />
                     </td>
