@@ -18,16 +18,8 @@ var RouteManger=(function(){
     var init=function(){
 
 
-        $(document).on('mouseup','#dmenu a',function(){
-            currentRoute=$(this).attr('href');
-            console.log('currentRoute:',currentRoute);
-
-            var xml=window
-            $(document).ready(function(){
-                console.log('123');
-            });
-
-            __execAction__();
+        $(document).on('mouseup,click','#dmenu a img',function(){
+            changeRoute($(this).attr('href'));
         });
 
     };
@@ -66,12 +58,28 @@ var RouteManger=(function(){
         }
     };
 
+    var changeRoute=function(route){
+        currentRoute=route;
+        console.log(currentRoute);
+        $('#app_main').append('<span id="routeChecker"></span>');
+        var _checkPageLoaded=function(){
+            setTimeout(function(){
+                if($('#routeChecker').length<1){
+                    __execAction__();
+                }else{
+                    _checkPageLoaded();
+                }
+            },100);
+        };
+        _checkPageLoaded();
+    };
 
     return {
         init:init,
         currentRoute:currentRoute,
         register:register,
-        actionList:actionList
+        actionList:actionList,
+        changeRoute:changeRoute
     }
 
 })(jQuery);

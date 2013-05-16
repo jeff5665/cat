@@ -113,7 +113,7 @@
         }
 
         $('body').on('noAttackTarget',function(e){
-            noAttackTargetHandler(gameConfig,CatRequest);
+            noAttackTargetHandler(CatRequest);
         });
     };
 
@@ -123,8 +123,8 @@
      * @param config
      * @param req
      */
-    var noAttackTargetHandler=function(config,req){
-        if(config.battle.country===true&&config.battle.field===true){
+    var noAttackTargetHandler=function(req){
+        if(gameConfig.battle.country===true&&gameConfig.battle.field===true){
             req.postToCountryBattle(function(result){
                 console.log('noAttackTargetHandler finish');
             });
@@ -137,12 +137,12 @@
      * @param config
      * @param req
      */
-    var goCountryBattle=function(config,req){
+    var goCountryBattle=function(){
         console.log('@goCountry');
-        if(config.battle.country===true&&config.battle.field===false){
+        if(gameConfig.battle.country===true&&gameConfig.battle.field===false){
             $('#villagemap').each(function(){//在村庄时
                 console.log('goCountryBattle start');
-                req.postToCountryBattle(function(result){
+                CatRequest.postToCountryBattle(function(result){
                     console.log('goCountryBattle finish');
                 });
             });
@@ -152,8 +152,8 @@
     /**
      * 一键自动寻找目标打野
      */
-    var oneKeyAutoFindBattle=function(config){
-        if(config.battle.field!==true){
+    var oneKeyAutoFindBattle=function(){
+        if(gameConfig.battle.field!==true){
             console.log('打野未勾选，因此不执行自动寻找目标打野');
             return;
         }
@@ -225,11 +225,12 @@
 
         setTimeout(function(){
             if(gameConfig.autoChangePage){
-                $('#dmenu').find('li.topitem').eq(_num%2).find('a').find('img').click();
+                $('#dmenu').find('li.topitem').eq(_num%2).find('a').each(function(){
+                    RM.changeRoute($(this).attr('href'));
+                    $(this).find('img').click();
+                });
             }
             setTimeout(function(){
-                oneKeyAutoFindBattle(gameConfig);
-                goCountryBattle(gameConfig,CatRequest);
                 console.log('runAuto');
             },3000);
             _num++;
@@ -257,16 +258,19 @@
 
     var init=function(){
         RM.init();
-        RM.register('/village.htm',function(){
-           console.log('village.htm');
-        });
-        RM.register('/area_map.htm',function(){
-            console.log('area_map.htm');
-        });
         initUI(config.UI);
         initBindEvent(config.JEvent);
-        initGameConfig(runAuto);
-
+        initGameConfig(function(gameConfig){
+            RM.register('/village.htm',function(){
+                console.log('@village');
+                goCountryBattle();
+            });
+            RM.register('/area_map.htm',function(){
+                console.log('@area_map');
+                oneKeyAutoFindBattle();
+            });
+            runAuto();
+        });
     };
 
     return {
