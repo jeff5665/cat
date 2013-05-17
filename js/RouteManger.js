@@ -18,9 +18,22 @@ var RouteManger=(function(){
     var init=function(){
 
 
-        $(document).on('mouseup,click','#dmenu a img',function(){
+        $('body').on('mouseup','#dmenu a',function(){
+            console.log('@RouteManger',$(this).attr('href'));
             changeRoute($(this).attr('href'));
+        }).on('mouseup','#work-head',function(e){
+             var arr=['培养武将','出征武将','保管武将','名将谱'];
+             var str=(e.target.innerText.match(/\>([^\<]+)</)||[])[1];//
+                if($.inArray(arr,str)>-1){
+                    changeRoute(str);
+                }
+              console.log(str,$.inArray(arr,str));
+                //todo 这里还有BUG 正则匹配
         });
+
+
+
+
 
     };
 
@@ -38,7 +51,7 @@ var RouteManger=(function(){
         }else{
             beforeChangePageActionList[route]=func;
         }
-
+        return this;
     };
 
     /**

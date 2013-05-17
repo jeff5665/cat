@@ -66,6 +66,26 @@
                     callBack(result);
                 }
             });
+        },
+        /**
+         * 道场专用请求
+         * @param callBack
+         */
+        postToPointBattle: function (callBack) {
+            var reqData = 'url=http%3A%2F%2Fnobunyaga.86game.com%2Fwrestle%2Fwrestle_entry.htm&httpMethod=GET&headers=&postData=&authz=signed&st=7E372EFAE412413B8B91282FFC69F69560B6AE0512015E0E1F90788162A3C527621001EE2B131FEC20E39A943EBE5FFDEB992E489E75BB6F2FDA3CD3745100E3B68888592011F53D9235FED9E078CE72A5A6530918CA20E6FBCD6593BCBD9BB2198AFF3939FF452F18951FA25E7330DA6164CF373183BEC7E6D0A8EAF741701F983507063EEBDF445F9749F02C9EBB50A53B57715265AB16423675161D97EB35222EEB68383600EB0A343E0853C179AB&contentType=TEXT&numEntries=3&getSummaries=false&signOwner=true&signViewer=true&gadget=http%3A%2F%2Fnobunyaga.86game.com%2Fgadget.xml&container=default&bypassSpecCache=&getFullHeaders=false&oauthState=';
+            $.post('http://nyashindig.86game.com/shindig/gadgets/makeRequest',reqData,function(){
+                 var _reqData='url=http%3A%2F%2Fnobunyaga.86game.com%2Fwrestle%2Fwrestle_setup.htm&httpMethod=GET&headers=&postData=&authz=signed&st=7E372EFAE412413B8B91282FFC69F69560B6AE0512015E0E1F90788162A3C527621001EE2B131FEC20E39A943EBE5FFDEB992E489E75BB6F2FDA3CD3745100E3B68888592011F53D9235FED9E078CE72A5A6530918CA20E6FBCD6593BCBD9BB2198AFF3939FF452F18951FA25E7330DA6164CF373183BEC7E6D0A8EAF741701F983507063EEBDF445F9749F02C9EBB50A53B57715265AB16423675161D97EB35222EEB68383600EB0A343E0853C179AB&contentType=TEXT&numEntries=3&getSummaries=false&signOwner=true&signViewer=true&gadget=http%3A%2F%2Fnobunyaga.86game.com%2Fgadget.xml&container=default&bypassSpecCache=&getFullHeaders=false&oauthState=';
+                $.post('http://nyashindig.86game.com/shindig/gadgets/makeRequest',_reqData,function(){
+                     var __reqData='url=http%3A%2F%2Fnobunyaga.86game.com%2Fwrestle%2Fwrestle_setup.htm&httpMethod=POST&headers=Content-Type%3Dapplication%252Fx-www-form-urlencoded&postData=action%3Dbtl&authz=signed&st=7E372EFAE412413B8B91282FFC69F69560B6AE0512015E0E1F90788162A3C527621001EE2B131FEC20E39A943EBE5FFDEB992E489E75BB6F2FDA3CD3745100E3B68888592011F53D9235FED9E078CE72A5A6530918CA20E6FBCD6593BCBD9BB2198AFF3939FF452F18951FA25E7330DA6164CF373183BEC7E6D0A8EAF741701F983507063EEBDF445F9749F02C9EBB50A53B57715265AB16423675161D97EB35222EEB68383600EB0A343E0853C179AB&contentType=TEXT&numEntries=3&getSummaries=false&signOwner=true&signViewer=true&gadget=http%3A%2F%2Fnobunyaga.86game.com%2Fgadget.xml&container=default&bypassSpecCache=&getFullHeaders=false&oauthState=';
+                    $.post('http://nyashindig.86game.com/shindig/gadgets/makeRequest',__reqData,function(result){
+                        if(typeof callBack ==='function'){
+                            callBack(result);
+                        }
+                    });
+
+                });
+            });
+
         }
     };
     var config={//
@@ -135,6 +155,22 @@
         if(gameConfig.battle.country===true&&gameConfig.battle.field===true){
             req.postToCountryBattle(function(result){
                 console.log('noAttackTargetHandler finish');
+            });
+        }
+    };
+
+
+
+    var goPointBattle=function(){
+        console.log('@goPointBattle');
+        if(gameConfig.battle.point===true){
+            $('#villagemap').each(function(){//在村庄时
+                console.log('goPointBattle start');
+                if($('#doing').find('b:contains("猫道场")').length<=0) {
+                    CatRequest.postToPointBattle(function(result){
+                        console.log('goPointBattle finish');
+                    });
+                }
             });
         }
     };
@@ -210,14 +246,15 @@
      * 依赖GameData
      */
     var showCardMem=function(){
-        var _span,_cardNo,_card;
-        var _template='<span style="position: absolute;top: @toppx;left: @leftpx;text-align: right;z-index: 9999;">@text</span>';
-        $('#content').find('div.work-body').find('>div[style="background:#FFFAE2;"]').each(function(i){
-            _span=$(this).find('span:contains("No.")');
-            _cardNo= $.trim(_span.text()).replace('No.','');
-            _card=GameData.cardInfo[_cardNo];
-            $(this).after(_template.replace('@top',$(this).position().top+6).replace('@left',$(this).position().left+80).replace('@text',_card.mem+' $'+_card.marketPrice));
-        });
+        setTimeout(function(){ var _span,_cardNo,_card;
+            var _template='<span style="position: absolute;top: @toppx;left: @leftpx;text-align: right;z-index: 9999;">@text</span>';
+            $('#content').find('div.work-body').find('>div[style="background:#FFFAE2;"]').each(function(i){
+                _span=$(this).find('span:contains("No.")');
+                _cardNo= $.trim(_span.text()).replace('No.','');
+                _card=GameData.cardInfo[_cardNo];
+                $(this).after(_template.replace('@top',$(this).position().top+6).replace('@left',$(this).position().left+80).replace('@text',_card.mem+' $'+_card.marketPrice));
+            });},100);
+
     };
 
 
@@ -257,14 +294,21 @@
             RM.register('/village.htm',function(){
                 console.log('@village');
                 goCountryBattle();
-            });
-            RM.register('/area_map.htm',function(){
+                goPointBattle();
+            }).register('/area_map.htm',function(){
                 console.log('@area_map');
                 oneKeyAutoFindBattle();
-            });
-            RM.register('/card/manage_card.htm',function(){
+            }).register('/card/manage_card.htm',function(){
                 showCardMem();
-            });
+            }).register('培养武将',function(){
+                showCardMem();
+            }).register('出征武将',function(){
+                    showCardMem();
+                }).register('保管武将',function(){
+                    showCardMem();
+                }).register('名将谱',function(){
+                    showCardMem();
+                });
             Timer.addCountFunc(function(times){//自动切换页面
                 if(gameConfig.other.autoChangePage){
                     $('#dmenu').find('li.topitem').eq(times%2).find('a').each(function(){//在村庄与地图页面来回切换

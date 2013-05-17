@@ -26,15 +26,24 @@
         }
 
 
+
+        /**
+         * 国战，打野，合战，道场
+         */
+        $('#country,#field,#battle,#point').change(function(){
+            gameConfig.battle[$(this).attr('id')]=$(this).prop('checked');
+            localStorage['GameConfig'] = JSON.stringify(gameConfig);
+        });
+        /**
+         * 自动切换页面
+         */
         $('#autoChangePage').change(function(){
             gameConfig.other.autoChangePage=$(this).prop('checked');
             localStorage['GameConfig'] = JSON.stringify(gameConfig);
         });
-        $('#country,#field,#battle').change(function(){
-            gameConfig.battle[$(this).attr('id')]=$(this).prop('checked');
-            localStorage['GameConfig'] = JSON.stringify(gameConfig);
-        });
-
+        /**
+         *自动切页面 间隔时间
+         */
         if(gameConfig.other&&gameConfig.other.autoRunInterval){
             $('#autoRunInterval')
                 .val(gameConfig.other.autoRunInterval)
@@ -45,6 +54,9 @@
         }
 
 
+        /**
+         * 重置
+         */
         $('.resetConfig').on('click',function(){
             var key=$(this).data('key');
             gameConfig[key]=defaultConfig[key];

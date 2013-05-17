@@ -8,7 +8,8 @@ var DefaultConfig = {
     battle: {
         country: false,
         field: false,
-        battle: false
+        battle: false,
+        point:false
     },
     build: {},
     deck: {},
