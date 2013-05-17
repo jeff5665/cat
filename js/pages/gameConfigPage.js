@@ -35,13 +35,15 @@
             localStorage['GameConfig'] = JSON.stringify(gameConfig);
         });
 
-        if(gameConfig.other&&gameConfig.other.autoRunInterval)
-        $('#autoRunInterval')
-            .val(gameConfig.other.autoRunInterval)
-            .change(function(){
-                gameConfig.other[$(this).attr('id')]=$(this).val();
-                localStorage['GameConfig'] = JSON.stringify(gameConfig);
-        });
+        if(gameConfig.other&&gameConfig.other.autoRunInterval){
+            $('#autoRunInterval')
+                .val(gameConfig.other.autoRunInterval)
+                .change(function(){
+                    gameConfig.other[$(this).attr('id')]=$(this).val();
+                    localStorage['GameConfig'] = JSON.stringify(gameConfig);
+                });
+        }
+
 
         $('.resetConfig').on('click',function(){
             var key=$(this).data('key');

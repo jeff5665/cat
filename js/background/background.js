@@ -1,6 +1,13 @@
 ﻿(function($,defaultConfig){
     $(function () {
         var gameConfig = {};
+        if (localStorage['GameConfig'] === undefined) {
+            gameConfig = defaultConfig;
+            localStorage['GameConfig'] = JSON.stringify(defaultConfig);
+        } else {
+            gameConfig = JSON.parse(localStorage['GameConfig']);
+        }
+
 
         var requestHandler = {
             saveGameConfig: function (req) {
@@ -12,20 +19,15 @@
             },
             getGameConfig: function (req, sender, sendResponse) {
                 sendResponse(gameConfig);
+                console.log('@getGameConfig',gameConfig);
             }
         };
 
 
-        if (localStorage['GameConfig'] === undefined) {
-            gameConfig = defaultConfig;
-            localStorage['GameConfig'] = JSON.stringify(defaultConfig);
-        } else {
-            gameConfig = JSON.parse(localStorage['GameConfig']);
-        }
+
 
 
         chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-            console.log(2);
             requestHandler[request.action](request,sender,sendResponse);//根据request.action执行相应处理，request为参数
         });
 
