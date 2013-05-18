@@ -24,11 +24,9 @@ var RouteManger=(function(){
         }).on('mouseup','#work-head',function(e){
              var arr=['培养武将','出征武将','保管武将','名将谱'];
              var str=(e.target.innerText.match(/\>([^\<]+)</)||[])[1];//
-                if($.inArray(arr,str)>-1){
+                if($.inArray(str,arr)>-1){
                     changeRoute(str);
                 }
-              console.log(str,$.inArray(arr,str));
-                //todo 这里还有BUG 正则匹配
         });
 
 

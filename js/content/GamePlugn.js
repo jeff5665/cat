@@ -1,4 +1,4 @@
-﻿var GamePlugn=(function($,U,GD,RM,Timer){
+﻿var GamePlugn=(function($,U,GD,RM,Timer,CatRequest){
     //$ = Jquery
     //U = JUtil
     //GD = GameData
@@ -13,81 +13,8 @@
             st:st
         }
     })();
-    var CatRequest={//封装请求，信猫专用
-        postToBattle:function(enemy_id,callBack){//打野的请求
-            var reqData={
-                url:'http://nobunyaga.86game.com/battle/setup.htm',
-                httpMethod:'POST',
-                headers:'Content-Type=application%2Fx-www-form-urlencoded',
-                postData:'enemy_id='+enemy_id+'&mc=0',
-                authz:'signed',
-                st:GameMustData.st,
-                contentType:'TEXT',
-                numEntries: 3,
-                getSummaries:false,
-                signOwner:true,
-                signViewer:true,
-                gadget:'http://nobunyaga.86game.com/gadget.xml',
-                container:'default',
-                bypassSpecCache:'',
-                getFullHeaders:false,
-                oauthState:''
-            };
+    CatRequest.init(GameMustData);
 
-            $.post('http://nyashindig.86game.com/shindig/gadgets/makeRequest',reqData,function(result){
-
-                if(typeof callBack ==='function'){
-                     callBack(result);
-                 }
-            });
-
-        },
-        postToCountryBattle:function(callBack){
-            var reqData={
-                url:'http://nobunyaga.86game.com/battle/mock_setup.htm',
-                httpMethod:'POST',
-                headers:'Content-Type=application%2Fx-www-form-urlencoded',
-                postData:'action=btl',
-                authz:'signed',
-                st:GameMustData.st,
-                contentType:'TEXT',
-                numEntries:3,
-                getSummaries:false,
-                signOwner:true,
-                signViewer:true,
-                gadget:'http://nobunyaga.86game.com/gadget.xml',
-                container:'default',
-                bypassSpecCache:'',
-                getFullHeaders:'false',
-                oauthState:''
-            };
-            $.post('http://nyashindig.86game.com/shindig/gadgets/makeRequest',reqData,function(result){
-                if(typeof callBack ==='function'){
-                    callBack(result);
-                }
-            });
-        },
-        /**
-         * 道场专用请求
-         * @param callBack
-         */
-        postToPointBattle: function (callBack) {
-            var reqData = 'url=http%3A%2F%2Fnobunyaga.86game.com%2Fwrestle%2Fwrestle_entry.htm&httpMethod=GET&headers=&postData=&authz=signed&st=7E372EFAE412413B8B91282FFC69F69560B6AE0512015E0E1F90788162A3C527621001EE2B131FEC20E39A943EBE5FFDEB992E489E75BB6F2FDA3CD3745100E3B68888592011F53D9235FED9E078CE72A5A6530918CA20E6FBCD6593BCBD9BB2198AFF3939FF452F18951FA25E7330DA6164CF373183BEC7E6D0A8EAF741701F983507063EEBDF445F9749F02C9EBB50A53B57715265AB16423675161D97EB35222EEB68383600EB0A343E0853C179AB&contentType=TEXT&numEntries=3&getSummaries=false&signOwner=true&signViewer=true&gadget=http%3A%2F%2Fnobunyaga.86game.com%2Fgadget.xml&container=default&bypassSpecCache=&getFullHeaders=false&oauthState=';
-            $.post('http://nyashindig.86game.com/shindig/gadgets/makeRequest',reqData,function(){
-                 var _reqData='url=http%3A%2F%2Fnobunyaga.86game.com%2Fwrestle%2Fwrestle_setup.htm&httpMethod=GET&headers=&postData=&authz=signed&st=7E372EFAE412413B8B91282FFC69F69560B6AE0512015E0E1F90788162A3C527621001EE2B131FEC20E39A943EBE5FFDEB992E489E75BB6F2FDA3CD3745100E3B68888592011F53D9235FED9E078CE72A5A6530918CA20E6FBCD6593BCBD9BB2198AFF3939FF452F18951FA25E7330DA6164CF373183BEC7E6D0A8EAF741701F983507063EEBDF445F9749F02C9EBB50A53B57715265AB16423675161D97EB35222EEB68383600EB0A343E0853C179AB&contentType=TEXT&numEntries=3&getSummaries=false&signOwner=true&signViewer=true&gadget=http%3A%2F%2Fnobunyaga.86game.com%2Fgadget.xml&container=default&bypassSpecCache=&getFullHeaders=false&oauthState=';
-                $.post('http://nyashindig.86game.com/shindig/gadgets/makeRequest',_reqData,function(){
-                     var __reqData='url=http%3A%2F%2Fnobunyaga.86game.com%2Fwrestle%2Fwrestle_setup.htm&httpMethod=POST&headers=Content-Type%3Dapplication%252Fx-www-form-urlencoded&postData=action%3Dbtl&authz=signed&st=7E372EFAE412413B8B91282FFC69F69560B6AE0512015E0E1F90788162A3C527621001EE2B131FEC20E39A943EBE5FFDEB992E489E75BB6F2FDA3CD3745100E3B68888592011F53D9235FED9E078CE72A5A6530918CA20E6FBCD6593BCBD9BB2198AFF3939FF452F18951FA25E7330DA6164CF373183BEC7E6D0A8EAF741701F983507063EEBDF445F9749F02C9EBB50A53B57715265AB16423675161D97EB35222EEB68383600EB0A343E0853C179AB&contentType=TEXT&numEntries=3&getSummaries=false&signOwner=true&signViewer=true&gadget=http%3A%2F%2Fnobunyaga.86game.com%2Fgadget.xml&container=default&bypassSpecCache=&getFullHeaders=false&oauthState=';
-                    $.post('http://nyashindig.86game.com/shindig/gadgets/makeRequest',__reqData,function(result){
-                        if(typeof callBack ==='function'){
-                            callBack(result);
-                        }
-                    });
-
-                });
-            });
-
-        }
-    };
     var config={//
       UI:{
           btn:{//配置按钮
@@ -112,7 +39,6 @@
           }
       }
     };
-    var autoBattleType=['山贼','忍者','敌军','强盗','海贼'];
 
     var initUI=function(ui){//初始化UI
         var _id,_name,_uiHtml='';
@@ -207,7 +133,7 @@
         }else{
             $('#mainmap').find('area').each(function(){
                 var _alt=$(this).attr('alt');
-                if($.inArray(_alt,autoBattleType)>-1){//找到自动打野的目标
+                if($.inArray(_alt,gameConfig.battle.fieldEnemyType)>-1){//找到自动打野的目标
                     _findTarget=true;
                     console.log('找到自动打野的目标');
                     //var _id=$(this).parent().parent().attr('id').replace('dialog','detail');
@@ -328,5 +254,5 @@
         init:init
     }
 
-})(jQuery,JUtil,GameData,RouteManger,Timer);
+})(jQuery,JUtil,GameData,RouteManger,Timer,CatRequest);
 

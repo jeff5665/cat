@@ -34,6 +34,36 @@
             gameConfig.battle[$(this).attr('id')]=$(this).prop('checked');
             localStorage['GameConfig'] = JSON.stringify(gameConfig);
         });
+
+        /**
+         *打野类型
+         */
+         $('#battle_field_type').each(function(){
+
+             $(this).find('input').each(function(){
+                 if($.inArray($(this).val(),gameConfig.battle.fieldEnemyType )>-1){
+                     console.log(gameConfig.battle.fieldEnemyType);
+                     $(this).attr('checked','checked');
+                 }
+                 $(this).on('change',function(){
+                         var pos;
+                         if($(this).prop('checked')){//checkbox 改变为选中状态
+                             gameConfig.battle.fieldEnemyType.push($(this).val());
+                             $.unique(gameConfig.battle.fieldEnemyType);//先增加当前选中元素 再删除重复项
+
+                         }else{
+                             pos=$.inArray($(this).val(),gameConfig.battle.fieldEnemyType);
+                             if(pos>-1){//checkbox的val值已经在数组中，从数组中删除对应元素
+                                 gameConfig.battle.fieldEnemyType.splice(pos,1);
+                             }
+                         }
+                         localStorage['GameConfig'] = JSON.stringify(gameConfig);
+
+                 });
+             });
+         });
+
+
         /**
          * 自动切换页面
          */

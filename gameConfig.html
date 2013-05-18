@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/gameConfig.css"/>
     <script src="lib/jquery.js" ></script>
     <script src="lib/bootstrap/js/bootstrap.js" ></script>
+    <script src="js/GameData.js"></script>
     <script src="js/DefaultConfig.js" ></script>
     <script src="js/pages/gameConfigPage.js"></script>
 </head>
@@ -67,6 +68,19 @@
                         合战<input type="checkbox" id="battle" />
                         道场<input type="checkbox" id="point" />
                     </td>
+                </tr>
+                <tr>
+                    <td>自动打怪类型设置</td>
+                    <td id="battle_field_type">
+                        山贼<input type="checkbox" value="山贼">
+                        忍者<input type="checkbox" value="忍者">
+                        强盗<input type="checkbox" value="强盗">
+                        海贼<input type="checkbox" value="海贼">
+                        敌军<input type="checkbox" value="敌军">
+                    </td>
+                </tr>
+                <tr>
+                    <td>设置移动顺序</td>
                 </tr>
                 </tbody>
             </table>

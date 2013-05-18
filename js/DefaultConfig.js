@@ -9,7 +9,8 @@ var DefaultConfig = {
         country: false,
         field: false,
         battle: false,
-        point:false
+        point:false,
+        fieldEnemyType:[]
     },
     build: {},
     deck: {},

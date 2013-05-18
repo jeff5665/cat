@@ -1,6 +1,6 @@
 ﻿{
   "name" : "信猫 插件",
-  "version" : "0.1.4",
+  "version" : "0.1.5",
   "description" : "信猫 Chrome 专用的插件",
   "background" : {
     "scripts": ["lib/jquery.js","js/DefaultConfig.js","js/background/background.js"]
@@ -8,7 +8,7 @@
   "content_scripts": [
     {
       "matches": ["http://nyashindig.86game.com/*"],
-      "js": ["lib/jquery.js","js/JUtil.js","js/Timer.js","js/GameData.js","js/RouteManger.js", "js/content/GamePlugn.js","js/content/content_script.js"],
+      "js": ["lib/jquery.js","js/JUtil.js","js/Timer.js","js/GameData.js","js/RouteManger.js","js/content/CatRequest.js" ,"js/content/GamePlugn.js","js/content/content_script.js"],
 	  "all_frames":true
     }
   ],
