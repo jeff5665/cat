@@ -73,18 +73,40 @@
 
     /**
      * 未发现战斗对象时的处理函数
-     * “国战”与“打野”同时勾上时才可能会触发
-     * @param config
      * @param req
      */
     var noAttackTargetHandler=function(req){
-        if(gameConfig.battle.country===true&&gameConfig.battle.field===true){
+        if(gameConfig.battle.country===true&&gameConfig.battle.field===true){//“国战”与“打野”同时勾上时才可能会触发
             req.postToCountryBattle(function(result){
                 console.log('noAttackTargetHandler finish');
             });
         }
+        moveCountry(req);//移动国家
     };
 
+    /**
+     * 检测当前所在国家，移动到用户配置的下一个国家
+     * 必须在地图页触发才有意义
+     * 因为只有在未发现战斗对象时才会调用，因此必定在地图页调用
+     */
+    var moveCountry=function(req){
+        var currentCountry,nextCountry,nextCountryId;
+        if(gameConfig.battle.goCountryList.length>0){
+            $('#notify_count_title').each(function(){//只有在地图页存在
+                currentCountry= $(this).find('b').text();
+                nextCountry=$.inArray(currentCountry,gameConfig.battle.goCountryList);
+                nextCountryId = GameData.country[nextCountry];
+                console.log('准备移动到',nextCountry,nextCountryId);
+                req.postToChangeCountry(nextCountryId,function(){
+                    console.log('移动请求发送成功');
+                })
+            });
+
+
+
+
+        };
+    };
 
 
     var goPointBattle=function(){
@@ -100,6 +122,7 @@
             });
         }
     };
+
 
     /**
      * 只去打国战

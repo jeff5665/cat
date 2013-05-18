@@ -1,11 +1,17 @@
-(function($,defaultConfig){
+(function($,defaultConfig,JUtil){
     $(function(){
+        var VERSION="0.1.5";
         var gameConfig={};
-        if (localStorage['GameConfig'] === undefined) {
+
+        if(localStorage['GameConfig']){
+            gameConfig = JSON.parse(localStorage['GameConfig']);
+            if(gameConfig.version!==VERSION){
+                gameConfig = defaultConfig;
+                localStorage['GameConfig'] = JSON.stringify(defaultConfig);
+            }
+        }else{
             gameConfig = defaultConfig;
             localStorage['GameConfig'] = JSON.stringify(defaultConfig);
-        } else {
-            gameConfig = JSON.parse(localStorage['GameConfig']);
         }
 
         //todo 优化此处 使用递归以及检测对象类型
@@ -63,6 +69,34 @@
              });
          });
 
+        /**
+         * 自动移动国家顺序
+         */
+        $('#battle_countryList').each(function(){
+            var $userlist=$('#user_countryList');
+            var listText="";
+            gameConfig.battle.goCountryList.forEach(function(value){
+                listText+=value+" ";
+            });
+            $userlist.text(listText);
+            //bind event
+            $(this).find('.clear').on('click',function(){
+                $userlist.text('');
+                gameConfig.battle.goCountryList=[];
+                localStorage['GameConfig'] = JSON.stringify(gameConfig);
+            });
+            $(this).find('.btnList').find('button').on('click',function(){
+                gameConfig.battle.goCountryList.push($(this).text());
+
+                gameConfig.battle.goCountryList=JUtil.unique(gameConfig.battle.goCountryList);
+                listText="";
+                gameConfig.battle.goCountryList.forEach(function(value){
+                    listText+=value+" ";
+                });
+                $userlist.text(listText);
+                localStorage['GameConfig'] = JSON.stringify(gameConfig);
+            });
+        });
 
         /**
          * 自动切换页面
@@ -96,6 +130,6 @@
         });
 
     });
-})(jQuery,DefaultConfig);
+})(jQuery,DefaultConfig,JUtil);
 
 

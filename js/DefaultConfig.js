@@ -4,13 +4,14 @@
  * Time: 上午8:45
  */
 var DefaultConfig = {
-
+    version:"0.1.5",
     battle: {
         country: false,
         field: false,
         battle: false,
         point:false,
-        fieldEnemyType:[]
+        fieldEnemyType:[],
+        goCountryList:[]
     },
     build: {},
     deck: {},
