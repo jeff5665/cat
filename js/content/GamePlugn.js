@@ -90,16 +90,19 @@
      * 因为只有在未发现战斗对象时才会调用，因此必定在地图页调用
      */
     var moveCountry=function(req){
-        var currentCountry,nextCountry,nextCountryId;
+        var countryList =gameConfig.battle.goCountryList,currentIndex,currentCountry,nextCountry,nextCountryId;
         if(gameConfig.battle.goCountryList.length>0){
             $('#notify_count_title').each(function(){//只有在地图页存在
                 currentCountry= $(this).find('b').text();
-                nextCountry=$.inArray(currentCountry,gameConfig.battle.goCountryList);
+                currentIndex=$.inArray(currentCountry,countryList);
+                nextCountry= countryList[(currentIndex+1)%countryList.length];
                 nextCountryId = GameData.country[nextCountry];
                 console.log('准备移动到',nextCountry,nextCountryId);
+
                 req.postToChangeCountry(nextCountryId,function(){
                     console.log('移动请求发送成功');
                 })
+
             });
 
 
