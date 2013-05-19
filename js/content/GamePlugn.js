@@ -23,6 +23,9 @@
               },
               showCardMem:{
                   btnName:'显示卡片备注'
+              },
+              jTimer:{
+                  btnName:'停止倒计时'
               }
           }
       },
@@ -35,6 +38,17 @@
           showCardMem:{
               click:function(){
                 showCardMem();
+              }
+          },
+          jTimer:{
+              click:function(){
+                  if($(this).text()==='停止倒计时'){
+                      Timer.stop();
+                      $(this).text('启动计时器');
+                  }else{
+                      Timer.run();
+                      $(this).text('停止倒计时');
+                  }
               }
           }
       }
@@ -230,7 +244,7 @@
      * @param callBack
      */
     var initGameConfig=function(callback){
-        chrome.runtime.sendMessage({action:'getGameConfig'},function(data){
+        chrome.runtime.sendMessage({action:'getUserConfig'},function(data){
             gameConfig=data;
             console.log('@initGameConfig',gameConfig);
             callback();
@@ -242,7 +256,7 @@
     var init=function(){
         RM.init();
         initGameConfig(function(){
-            Timer.setCountTotalTime(gameConfig.other.autoRunInterval);
+            Timer.setCountDownTotalTime(gameConfig.other.autoRunInterval);
             RM.register('/village.htm',function(){
                 console.log('@village');
                 goCountryBattle();

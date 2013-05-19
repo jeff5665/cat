@@ -1,11 +1,11 @@
 ﻿(function($,defaultConfig){
     $(function () {
-        var gameConfig = {};
-        if (localStorage['GameConfig'] === undefined) {
-            gameConfig = defaultConfig;
-            localStorage['GameConfig'] = JSON.stringify(defaultConfig);
+        var userConfig = {};
+        if (localStorage['UserConfig'] === undefined) {
+            userConfig = defaultConfig;
+            localStorage['UserConfig'] = JSON.stringify(defaultConfig);
         } else {
-            gameConfig = JSON.parse(localStorage['GameConfig']);
+            userConfig = JSON.parse(localStorage['UserConfig']);
         }
 
 
@@ -14,13 +14,30 @@
 
             },
             saveBattleConfig: function (req, sender, sendResponse) {//保存战斗配置
-                gameConfig.battle = req.battle;
-                localStorage['GameConfig'] = JSON.stringify(gameConfig);
+                userConfig.battle = req.battle;
+                localStorage['GameConfig'] = JSON.stringify(userConfig);
             },
-            getGameConfig: function (req, sender, sendResponse) {
-                sendResponse(gameConfig);
-                console.log('@getGameConfig',gameConfig);
+            getUserConfig: function (req, sender, sendResponse) {
+                sendResponse(userConfig);
+                console.log('@getUserConfig',userConfig);
+            } ,
+            reloadUserConfig:function(req,sender,sendResponse){
+                console.log('reloadUserConfig');
+                var hasError=false;
+                try{
+                    userConfig=JSON.parse(localStorage['UserConfig']) ;
+                }
+                catch (e){
+                    hasError=true;
+                    sendResponse('background:: reloadUserConfig 失败，可能localstorage满了');
+                }
+                if(!hasError){
+                    sendResponse('background:: reloadUserConfig 成功');
+                }
+
+
             }
+
         };
 
 
