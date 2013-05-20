@@ -24,4 +24,4 @@ var DefaultConfig = {
     }
 
 
-}; //todo 改变结构 根据这里的结构 自动生成UserConfig页面中的对应选项，一般情况不再需要额外去写JS
+};  //todo 改变结构 根据这里的结构 自动生成UserConfig页面中的对应选项，一般情况不再需要额外去写JS
