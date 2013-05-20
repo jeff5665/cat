@@ -108,23 +108,37 @@
         });
 
         /**
+         * 设置粮食最小值
+         */
+        $('#battle_minFood').each(function(){
+            $(this).val(userConfig.battle.minFood)
+                    .on('change',function(){
+                    userConfig.battle.minFood=$(this).text();
+                    saveConfig();
+            });
+        });
+
+
+        /**
          * 自动切换页面
          */
         $('#autoChangePage').change(function(){
             userConfig.other.autoChangePage=$(this).prop('checked');
-            localStorage['UserConfig'] = JSON.stringify(userConfig);
+            saveConfig();
         });
+
         /**
          *自动切页面 间隔时间
          */
-        if(userConfig.other&&userConfig.other.autoRunInterval){
-            $('#autoRunInterval')
-                .val(userConfig.other.autoRunInterval)
+        $('#autoRunInterval').each(function(){
+            $(this).val(userConfig.other.autoRunInterval)
                 .change(function(){
                     userConfig.other[$(this).attr('id')]=$(this).val();
                     saveConfig();
                 });
-        }
+        });
+
+
 
 
         /**

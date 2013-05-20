@@ -129,6 +129,9 @@
     var goPointBattle=function(){
         console.log('@goPointBattle');
         if(gameConfig.battle.point===true){
+            if(!hasFood()){//食物不足
+                return false;
+            }
             $('#villagemap').each(function(){//在村庄时
                 console.log('goPointBattle start');
                 if($('#doing').find('b:contains("猫道场")').length<=0) {
@@ -163,14 +166,20 @@
      * 一键自动寻找目标打野
      */
     var oneKeyAutoFindBattle=function(){
+        var _findTarget=false;
         if(gameConfig.battle.field!==true){
             console.log('打野未勾选，因此不执行自动寻找目标打野');
             return;
         }
-        var _findTarget=false;
+
         if($('#notify_count_main').length>0){
           console.log('部队行动中，无法执行自动寻找目标打怪');
         }else{
+            if(!hasFood()){//食物不足
+                return false;
+            }
+
+
             $('#mainmap').find('area').each(function(){
                 var _alt=$(this).attr('alt');
                 if($.inArray(_alt,gameConfig.battle.fieldEnemyType)>-1){//找到自动打野的目标
@@ -223,7 +232,19 @@
 
     };
 
-
+    /**
+     * 检测食物是否最大值
+     * @returns {boolean}
+     */
+    var hasFood=function(){
+        var food=parseInt($('#element_food').text());
+        if(food>gameConfig.battle.minFood){
+            return true;
+        }else{
+            console.log('食物低于设置的最小值');
+            return false;
+        }
+    };
 
     /**
      * 20130513

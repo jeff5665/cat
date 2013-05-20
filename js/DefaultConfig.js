@@ -11,7 +11,8 @@ var DefaultConfig = {
         battle: false,
         point:false,
         fieldEnemyType:[],
-        goCountryList:[]
+        goCountryList:[],
+        minFood:300
     },
     build: {},
     deck: {},
