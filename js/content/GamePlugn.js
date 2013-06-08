@@ -1,4 +1,4 @@
-﻿var GamePlugn=(function($,U,GD,RM,Timer,CatRequest){
+﻿var GamePlugn=(function($,U,GD,RM,Timer,CatRequest,CatCount){
     //$ = Jquery
     //U = JUtil
     //GD = GameData
@@ -26,6 +26,9 @@
               },
               jTimer:{
                   btnName:'停止倒计时'
+              },
+              testBtn:{
+                  btnName:'测试获取提交数据'
               }
           }
       },
@@ -50,6 +53,11 @@
                       $(this).text('停止倒计时');
                   }
               }
+          },
+          testBtn:{
+               click:function(){
+                   CatCount.post('jeff',3);
+               }
           }
       }
     };
@@ -315,5 +323,5 @@
         init:init
     }
 
-})(jQuery,JUtil,GameData,RouteManger,Timer,CatRequest);
+})(jQuery,JUtil,GameData,RouteManger,Timer,CatRequest,CatCount);
 
