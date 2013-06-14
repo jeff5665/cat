@@ -8,12 +8,12 @@
   "content_scripts": [
     {
       "matches": ["http://nyashindig.86game.com/*"],
-      "js": ["lib/jquery.js","js/JUtil.js","js/Timer.js","js/GameData.js","js/RouteManger.js","js/content/CatRequest.js" ,"js/content/GamePlugn.js","js/content/content_script.js"],
+      "js": ["lib/jquery.js","js/SwapMyCookieMessage.js","js/CatCount.js","js/JUtil.js","js/Timer.js","js/GameData.js","js/RouteManger.js","js/content/CatRequest.js" ,"js/content/GamePlugn.js","js/content/content_script.js"],
 	  "all_frames":true
     }
   ],
   
-   "permissions": [ "tabs", "http://nyashindig.86game.com/*", "cookies","background" ],
+   "permissions": [ "tabs", "http://nyashindig.86game.com/*", "cookies","background","http://10.0.7.14/*","http://cat.macxia.com/*" ],
 	"browser_action" : {
     "default_icon" : "img/icon.png",
 	"default_title": "cat setting"
