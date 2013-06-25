@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>game config</title>
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-responsive.css"/>
+    <link rel="stylesheet" href="css/gameConfig.css"/>
+    <script src="lib/jquery.js" ></script>
+    <script src="lib/bootstrap/js/bootstrap.js" ></script>
+    <script src="js/JUtil.js"></script>
+    <script src="js/GameData.js"></script>
+    <script src="js/DefaultConfig.js" ></script>
+    <script src="js/pages/UserConfigPage.js"></script>
+</head>
+<body>
+<div class="row-fluid">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#build_tab" data-toggle="tab">建造</a></li>
+        <li><a href="#battle_tab" data-toggle="tab">打怪</a></li>
+        <li><a href="#deck_tab" data-toggle="tab">编队</a></li>
+        <li><a href="#trade_tab" data-toggle="tab">交易所</a></li>
+        <li><a href="#card_tab" data-toggle="tab">卡片</a></li>
+        <li><a href="#other_tab" data-toggle="tab">其他</a></li>
+    </ul>
+    <div class="span12 tab-content">
+        <div class="tab-pane active" id="build_tab">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>功能名</th>
+                        <th>选项 <button class="btn btn-danger btn-mini resetConfig" data-key="build"><i class="icon-white icon-adjust"></i> 重置</button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>自动升级粮仓</td>
+                        <td><input type="checkbox"/></td>
+                    </tr>
+                    <tr>
+                        <td>自动升级五行</td>
+                        <td>
+                            火 <input type="checkbox"/>
+                            风 <input type="checkbox"/>
+                            水 <input type="checkbox"/>
+                            木 <input type="checkbox"/>
+                            空 <input type="checkbox"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane" id="battle_tab">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>功能名</th>
+                    <th>选项 <button class="btn btn-danger btn-mini resetConfig" data-key="battle">
+                        <i class="icon-white icon-adjust"></i> 重置</button>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>自动打怪</td>
+                    <td>
+                        国战<input type="checkbox" id="country"/>
+                        打野<input type="checkbox" id="field" />
+                        合战<input type="checkbox" id="battle" />
+                        道场<input type="checkbox" id="point" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>自动打怪类型设置</td>
+                    <td id="battle_field_type">
+                        山贼<input type="checkbox" value="山贼">
+                        忍者<input type="checkbox" value="忍者">
+                        强盗<input type="checkbox" value="强盗">
+                        海贼<input type="checkbox" value="海贼">
+                        敌军<input type="checkbox" value="敌军">
+                    </td>
+                </tr>
+                <tr>
+                    <td>设置移动顺序</td>
+                    <td id="battle_countryList">
+                        <div class="well well-small">
+                            <div id="user_countryList"></div>
+                            <button class="btn btn-danger btn-mini clear">清空</button>
+                        </div>
+                        <div class="btnList">
+                            <button class="btn btn-mini">伊达家</button>
+                            <button class="btn btn-mini">最上家</button>
+                            <button class="btn btn-mini">北条家</button>
+                            <button class="btn btn-mini">武田家</button>
+                            <button class="btn btn-mini">上杉家</button>
+                            <button class="btn btn-mini">德川家</button>
+                            <button class="btn btn-mini">织田家</button>
+                            <button class="btn btn-mini">斋藤家</button>
+                            <button class="btn btn-mini">三好家</button>
+                            <button class="btn btn-mini">足利家</button>
+                            <button class="btn btn-mini">毛利家</button>
+                            <button class="btn btn-mini">尼子家</button>
+                            <button class="btn btn-mini">长宗我部家</button>
+                            <button class="btn btn-mini">龙造寺家</button>
+                            <button class="btn btn-mini">大友家</button>
+                            <button class="btn btn-mini">岛津家</button>
+                        </div>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>设置粮食最小值</td>
+                    <td>
+                        <input type="text" id="battle_minFood"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane" id="deck_tab">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>功能</th>
+                        <th>选项 <button class="btn btn-danger btn-mini resetConfig" data-key="deck"><i class="icon-white icon-adjust"></i> 重置</button></th>
+                    </tr>
+                </thead>
+            </table>
+
+        </div>
+        <div class="tab-pane" id="trade_tab">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>功能</th>
+                    <th>选项 <button class="btn btn-danger btn-mini resetConfig" data-key="trade"><i class="icon-white icon-adjust"></i> 重置</button></th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="tab-pane" id="card_tab">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>功能名</th>
+                    <th>选项 <button class="btn btn-danger btn-mini resetConfig" data-key="card"><i class="icon-white icon-adjust"></i> 重置</button></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>自动养成</td>
+                    <td>
+                       极(1xxx) <input type="checkbox" />
+                       稀(2xxx) <input type="checkbox"/>
+                       珍(3xxx) <input type="checkbox"/>
+                       普(4xxx) <input type="checkbox"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>自动合成</td>
+                    <td>
+                        极(1xxx) <input type="checkbox" />
+                        稀(2xxx) <input type="checkbox"/>
+                        珍(3xxx) <input type="checkbox"/>
+                        普(4xxx) <input type="checkbox"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane" id="other_tab">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>功能名</th>
+                    <th>选项 <button class="btn btn-danger btn-mini resetConfig" data-key="other"><i class="icon-white icon-adjust"></i> 重置</button></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td>自动执行间隔</td><td><input id="autoRunInterval" type="number" min="0" value="" /></td></tr>
+                <tr>
+                    <td>是否自动切换页面</td>
+                    <td>
+                        <input type="checkbox" id="autoChangePage" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>保存地址:</td>
+                    <td>
+                        <input type="url" id="requestURL" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>用户ID</td>
+                    <td><input type="number" id="user_id" /></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
