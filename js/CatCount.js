@@ -51,6 +51,7 @@ var CatCount=(function($,SwapMyCookieMessage){
             money:$('#lottery_point').text(),
             food:$('#element_food').text(),
             army:getArmy(),
+            blood:getBlood(),
             lasttime:new Date().toLocaleString(),
             user_id:user_id
         };
