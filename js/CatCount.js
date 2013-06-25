@@ -22,6 +22,23 @@ var CatCount=(function($,SwapMyCookieMessage){
     }
 
     /**
+     * 获取所有出征猫是否可交易
+     */
+    function getBlood(){
+        var blood=[];
+        $('#content').find('div.left[style="background:#FFFAE2;"]').each(function(){
+            if($(this).find('img.card-trade').length>0)
+            {blood.push('F')} //F表示不可交易
+            else
+            {blood.push('T');} //T表示可交易
+        });
+
+        console.log(blood);
+
+        return blood.toString();
+    }
+
+    /**
      * 提交到服务器
      * @param gameName
      * @param user_id
