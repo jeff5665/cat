@@ -24,18 +24,18 @@ var CatCount=(function($,SwapMyCookieMessage){
     /**
      * 获取所有出征猫是否可交易
      */
-    function getBlood(){
-        var blood=[];
+    function getTrade(){
+        var trade=[];
         $('#content').find('div.left[style="background:#FFFAE2;"]').each(function(){
             if($(this).find('img.card-trade').length>0)
-            {blood.push('F')} //F表示不可交易
+            {trade.push('F')} //F表示不可交易
             else
-            {blood.push('T');} //T表示可交易
+            {trade.push('T');} //T表示可交易
         });
 
-        console.log(blood);
+        console.log(trade);
 
-        return blood.toString();
+        return trade.toString();
     }
 
     /**
@@ -51,7 +51,7 @@ var CatCount=(function($,SwapMyCookieMessage){
             money:$('#lottery_point').text(),
             food:$('#element_food').text(),
             army:getArmy(),
-            blood:getBlood(),
+            trade:getTrade(),
             lasttime:new Date().toLocaleString(),
             user_id:user_id
         };
