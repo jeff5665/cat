@@ -8,6 +8,34 @@ var CatCount=(function($,SwapMyCookieMessage){
         return gamename;
     }
 
+    /**
+     *  统计已完成的基本建筑
+     */
+    function getBuilded(){
+        builded=[];
+        $('#mapbg').find('area').each(function(){
+            var _alt=$(this).attr('alt');
+            ['水田','兵粮库','宝物库','公馆'].forEach(function(value,index){
+                if(_alt.indexOf(value)>-1){
+                    builded.push(_alt);
+                }
+            })
+        });
+        return builded.sort();
+    }
+
+    /**
+     *  获取账号当前资源值
+     */
+    function getResources(){
+        var resources=[];
+        resources.push('火'+$("#element_fire").text());
+        resources.push('地'+$("#element_earth").text());
+        resources.push('风'+$("#element_wind").text());
+        resources.push('水'+$("#element_water").text());
+        resources.push('空'+$("#element_sky").text());
+        return resources;
+    }
 
     /**
      * 获取所有出征猫功勋
@@ -33,8 +61,6 @@ var CatCount=(function($,SwapMyCookieMessage){
             {trade.push('T');} //T表示可交易
         });
 
-        console.log(trade);
-
         return trade.toString();
     }
 
@@ -52,6 +78,8 @@ var CatCount=(function($,SwapMyCookieMessage){
             food:$('#element_food').text(),
             army:getArmy(),
             trade:getTrade(),
+            builded:builded.toString(),
+            resources:getResources().toString(),
             lasttime:new Date().toLocaleString(),
             user_id:user_id
         };
@@ -61,10 +89,14 @@ var CatCount=(function($,SwapMyCookieMessage){
         });
     }
 
-    var gamename;
-
+    var gamename='';
+    var builded=[];
     return {
         request:request,
-        initGameName:initGameName
+        initGameName:initGameName,
+        getBuilded:getBuilded,
     }
+
+
+
 })(jQuery,SwapMyCookieMessage);
