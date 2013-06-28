@@ -7,7 +7,7 @@
     var GameMustData=(function(){
         var st=(location.href.match(/st=([0-9a-zA-Z]+)#rpctoken/)||[])[1];
         if(st===undefined){
-           alert('初始必要信息失败');
+            alert('初始必要信息失败');
         }
         return {
             st:st
@@ -16,54 +16,54 @@
     CatRequest.init(GameMustData);
 
     var config={//
-      UI:{
-          btn:{//配置按钮
-              autoBattle:{
-                  btnName:'一键打野'
-              },
-              showCardMem:{
-                  btnName:'显示卡片备注'
-              },
-              jTimer:{
-                  btnName:'停止倒计时'
-              },
-              testBtn:{
-                  btnName:'测试提交'
-              }
-          }
-      },
-      JEvent:{//配置事件，需要和按钮名相同
-          autoBattle:{
-              click:function(e){
-                  oneKeyAutoFindBattle();
-              }
-          },
-          showCardMem:{
-              click:function(){
-                showCardMem();
-              }
-          },
-          jTimer:{
-              click:function(){
-                  if($(this).text()==='停止倒计时'){
-                      Timer.stop();
-                      $(this).text('启动计时器');
-                  }else{
-                      Timer.run();
-                      $(this).text('停止倒计时');
-                  }
-              }
-          },
-          testBtn:{
-               click:function(){
-                   RM.changeRoute('/card/manage_card.htm',function(){
-                       CatCount.request(gameConfig.other.user_id,gameConfig.other.requestURL);
-                   });
-                   console.log( $('#dmenu').find('a.item[href="/card/manage_card.htm"]').length);
-                   $('#dmenu').find('a.item[href="/card/manage_card.htm"]').find('img').click();
-               }
-          }
-      }
+        UI:{
+            btn:{//配置按钮
+                autoBattle:{
+                    btnName:'一键打野'
+                },
+                showCardMem:{
+                    btnName:'显示卡片备注'
+                },
+                jTimer:{
+                    btnName:'停止倒计时'
+                },
+                testBtn:{
+                    btnName:'测试提交'
+                }
+            }
+        },
+        JEvent:{//配置事件，需要和按钮名相同
+            autoBattle:{
+                click:function(e){
+                    oneKeyAutoFindBattle();
+                }
+            },
+            showCardMem:{
+                click:function(){
+                    showCardMem();
+                }
+            },
+            jTimer:{
+                click:function(){
+                    if($(this).text()==='停止倒计时'){
+                        Timer.stop();
+                        $(this).text('启动计时器');
+                    }else{
+                        Timer.run();
+                        $(this).text('停止倒计时');
+                    }
+                }
+            },
+            testBtn:{
+                click:function(){
+                    RM.changeRoute('/card/manage_card.htm',function(){
+                        CatCount.request(gameConfig.other.user_id,gameConfig.other.requestURL);
+                    });
+                    console.log( $('#dmenu').find('a.item[href="/card/manage_card.htm"]').length);
+                    $('#dmenu').find('a.item[href="/card/manage_card.htm"]').find('img').click();
+                }
+            }
+        }
     };
 
     var initUI=function(ui){//初始化UI
@@ -91,7 +91,7 @@
             noAttackTargetHandler(CatRequest);
         });
         Timer.addFunc(function(t){
-           $('#JTimer').text(t);
+            $('#JTimer').text(t);
         });
     };
 
@@ -185,7 +185,7 @@
         }
 
         if($('#notify_count_main').length>0){
-          console.log('部队行动中，无法执行自动寻找目标打怪');
+            console.log('部队行动中，无法执行自动寻找目标打怪');
         }else{
             if(!hasFood()){//食物不足
                 return false;
@@ -222,8 +222,8 @@
                 }
             });
             if(!_findTarget){
-                  $('body').trigger('noAttackTarget');
-                  console.log('未发现可攻击目标');
+                $('body').trigger('noAttackTarget');
+                console.log('未发现可攻击目标');
             }
         }
 
@@ -293,23 +293,23 @@
             Timer.setCountDownTotalTime(gameConfig.other.autoRunInterval);
             RM.register('/village.htm',function(){
                 console.log('@village');
-
+                CatCount.getBuilded();
                 goCountryBattle();
                 goPointBattle();
             }).register('/area_map.htm',function(){
-                console.log('@area_map');
-                CatCount.initGameName();
-                oneKeyAutoFindBattle(function(){//找到敌人派出部队后去管理卡组页面获取出城部队的功勋后再提交
-                    RM.changeRoute('/card/manage_card.htm',function(){
-                        CatCount.request(gameConfig.other.user_id,gameConfig.other.requestURL);
+                    console.log('@area_map');
+                    CatCount.initGameName();
+                    oneKeyAutoFindBattle(function(){//找到敌人派出部队后去管理卡组页面获取出城部队的功勋后再提交
+                        RM.changeRoute('/card/manage_card.htm',function(){
+                            CatCount.request(gameConfig.other.user_id,gameConfig.other.requestURL);
+                        });
+                        $('#dmenu').find('a.item[href="/card/manage_card.htm"]').find('img').click();
                     });
-                    $('#dmenu').find('a.item[href="/card/manage_card.htm"]').find('img').click();
-                });
-            }).register('/card/manage_card.htm',function(){
-                showCardMem();
-            }).register('培养武将',function(){
-                showCardMem();
-            }).register('出征武将',function(){
+                }).register('/card/manage_card.htm',function(){
+                    showCardMem();
+                }).register('培养武将',function(){
+                    showCardMem();
+                }).register('出征武将',function(){
                     showCardMem();
                 }).register('保管武将',function(){
                     showCardMem();
