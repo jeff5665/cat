@@ -15,7 +15,7 @@ var JUtil=(function(){
         }
         return params;
     };
-    function getUnsafeWindow() {
+    var getUnsafeWindow=function() {
         if (typeof(this.unsafeWindow) != "undefined") {//Greasemonkey, Scriptish, Tampermonkey, etc.
             return this.unsafeWindow;
         } else if (typeof(unsafeWindow) != "undefined" && this === window && unsafeWindow === window) {//Google Chrome natively
@@ -25,11 +25,31 @@ var JUtil=(function(){
         } else {//Opera, IE7Pro, etc.
             return window;
         }
-    }
-    var myUnsafeWindow = getUnsafeWindow();
+    };
+
+    var unique=function(arr){
+            var a = [],
+                o = {},
+                i,
+                v,
+                len = arr.length;
+            if (len < 2) {
+                return arr;
+            }
+            for (i = 0; i < len; i++) {
+                v = arr[i];
+                if (o[v] !== 1) {
+                    a.push(v);
+                    o[v] = 1;
+                }
+            }
+            return a;
+
+    };
 
     return {
         getUrlParams:getUrlParams,
-        unsafeWindow:myUnsafeWindow
+        unsafeWindow:getUnsafeWindow,
+        unique:unique
     }
 })();

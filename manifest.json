@@ -1,25 +1,24 @@
 ﻿{
   "name" : "信猫 插件",
-  "version" : "0.0.1",
+  "version" : "0.1.5",
   "description" : "信猫 Chrome 专用的插件",
   "background" : {
-    "scripts": ["lib/jquery.js","js/background.js"]
+    "scripts": ["lib/jquery.js","js/DefaultConfig.js","js/background/background.js"]
   },
   "content_scripts": [
     {
       "matches": ["http://nyashindig.86game.com/*"],
-      "js": ["lib/jquery.js","js/JUtil.js", "js/GamePlugn.js","js/content_script.js"],
+      "js": ["lib/jquery.js","js/SwapMyCookieMessage.js","js/CatCount.js","js/JUtil.js","js/Timer.js","js/GameData.js","js/RouteManger.js","js/content/CatRequest.js" ,"js/content/GamePlugn.js","js/content/content_script.js"],
 	  "all_frames":true
     }
   ],
   
-   "permissions": [ "tabs", "http://nyashindig.86game.com/*", "cookies","background" ],
+   "permissions": [ "tabs", "http://nyashindig.86game.com/*", "cookies","background","http://10.0.7.14/*","http://cat.macxia.com/*" ],
 	"browser_action" : {
     "default_icon" : "img/icon.png",
-	"default_title": "cat setting",
-	"default_popup": "popup.html"
+	"default_title": "cat setting"
   },
-  "options_page": "options.html",
+  "options_page": "userConfig.html",
   "icons" : {
     "128" : "img/icon.png"
   },
