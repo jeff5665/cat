@@ -17,6 +17,10 @@ var RouteManger=(function(){
      */
     var init=function(){
 
+        changeRoute('/village.htm');
+        $('#main').find('a[href="/world_list.htm"]').find('img').click();
+
+
 
         $('body').on('mouseup','#dmenu a',function(){
             console.log('@RouteManger',$(this).attr('href'));
@@ -69,15 +73,20 @@ var RouteManger=(function(){
         }
     };
 
-    var changeRoute=function(route){
+    /**
+     * 改变RouteManger的currentRoue,并在改变后执行相应的Action
+     * @param route
+     */
+    var changeRoute=function(route,callback){
         currentRoute=route;
         console.log(currentRoute);
         $('#app_main').append('<span id="routeChecker"></span>');
         var _checkPageLoaded=function(){
             setTimeout(function(){
-                if($('#routeChecker').length<1){
-                    __execAction__();
-                }else{
+                if($('#routeChecker').length<1){//页面加载完
+                    __execAction__();//执行相应的Action
+                    callback&&callback();
+                }else{//页面未加载
                     _checkPageLoaded();
                 }
             },100);

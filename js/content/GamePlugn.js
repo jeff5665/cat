@@ -1,4 +1,4 @@
-﻿var GamePlugn=(function($,U,GD,RM,Timer,CatRequest){
+﻿var GamePlugn=(function($,U,GD,RM,Timer,CatRequest,CatCount){
     //$ = Jquery
     //U = JUtil
     //GD = GameData
@@ -26,6 +26,9 @@
               },
               jTimer:{
                   btnName:'停止倒计时'
+              },
+              testBtn:{
+                  btnName:'测试提交'
               }
           }
       },
@@ -50,6 +53,15 @@
                       $(this).text('停止倒计时');
                   }
               }
+          },
+          testBtn:{
+               click:function(){
+                   RM.changeRoute('/card/manage_card.htm',function(){
+                       CatCount.request(gameConfig.other.user_id,gameConfig.other.requestURL);
+                   });
+                   console.log( $('#dmenu').find('a.item[href="/card/manage_card.htm"]').length);
+                   $('#dmenu').find('a.item[href="/card/manage_card.htm"]').find('img').click();
+               }
           }
       }
     };
@@ -165,7 +177,7 @@
     /**
      * 一键自动寻找目标打野
      */
-    var oneKeyAutoFindBattle=function(){
+    var oneKeyAutoFindBattle=function(callback){
         var _findTarget=false;
         if(gameConfig.battle.field!==true){
             console.log('打野未勾选，因此不执行自动寻找目标打野');
@@ -190,6 +202,7 @@
 
                     //直接提交请求
                     CatRequest.postToBattle(_id,function(data){
+                        callback&&callback();
                         //console.log(data);
                     });
                     /*
@@ -280,11 +293,18 @@
             Timer.setCountDownTotalTime(gameConfig.other.autoRunInterval);
             RM.register('/village.htm',function(){
                 console.log('@village');
+
                 goCountryBattle();
                 goPointBattle();
             }).register('/area_map.htm',function(){
                 console.log('@area_map');
-                oneKeyAutoFindBattle();
+                CatCount.initGameName();
+                oneKeyAutoFindBattle(function(){//找到敌人派出部队后去管理卡组页面获取出城部队的功勋后再提交
+                    RM.changeRoute('/card/manage_card.htm',function(){
+                        CatCount.request(gameConfig.other.user_id,gameConfig.other.requestURL);
+                    });
+                    $('#dmenu').find('a.item[href="/card/manage_card.htm"]').find('img').click();
+                });
             }).register('/card/manage_card.htm',function(){
                 showCardMem();
             }).register('培养武将',function(){
@@ -315,5 +335,5 @@
         init:init
     }
 
-})(jQuery,JUtil,GameData,RouteManger,Timer,CatRequest);
+})(jQuery,JUtil,GameData,RouteManger,Timer,CatRequest,CatCount);
 

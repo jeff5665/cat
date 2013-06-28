@@ -138,6 +138,24 @@
                 });
         });
 
+        /**
+         * 统计帐号信息的请求地址
+         */
+        $('#requestURL').each(function(){
+            $(this).val(userConfig.other.requestURL)
+                .change(function(){
+                    userConfig.other[$(this).attr('id')]=$(this).val();
+                    saveConfig();
+                });
+        });
+
+        $('#user_id').each(function(){
+            $(this).val(userConfig.other.user_id)
+                .change(function(){
+                    userConfig.other[$(this).attr('id')]=$(this).val();
+                    saveConfig();
+                });
+        });
 
 
 

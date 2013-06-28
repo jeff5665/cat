@@ -20,7 +20,9 @@ var DefaultConfig = {
     card: {},
     other:{
         autoChangePage:false,
-        autoRunInterval:30
+        autoRunInterval:30,
+        requestURL:"http://cat.macxia.com/save",
+        user_id:3
     }
 
 
