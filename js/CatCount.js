@@ -65,6 +65,23 @@ var CatCount=(function($,SwapMyCookieMessage){
     }
 
     /**
+     *  获取武将生命值
+     */
+    function getBlood(){
+        var hp=[];
+        $('#content').find('span.card-hp').each(function(){
+            var hp1=[];
+            $(this).find('img[src]').each(function(){
+                var _src=$(this).attr('src');
+                _src=_src.toString().substr(_src.length-5,1);
+                hp1.push(_src);
+            })
+            hp.push(hp1.join(""));
+        })
+        return hp.toString();
+    }
+
+    /**
      * 提交到服务器
      * @param gameName
      * @param user_id
@@ -80,6 +97,7 @@ var CatCount=(function($,SwapMyCookieMessage){
             trade:getTrade(),
             builded:builded.toString(),
             resources:getResources().toString(),
+            blood:getBlood(),
             lasttime:new Date().toLocaleString(),
             user_id:user_id
         };
