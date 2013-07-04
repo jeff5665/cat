@@ -155,6 +155,33 @@
         }
     };
 
+    /**
+     * 自动建造
+     * 只有“国战”勾选 “打野”不勾才触发
+     * @param config
+     * @param req
+     */
+    var goBuildHouse=function(){
+        console.log('@goHouse');
+
+        if(gameConfig.build.buildUpdate===true){
+            resourcesHouse(function(mapid){
+                if($('#doing').find('div:contains("扩建中")').length<=0){
+                    console.log('可以提交自动建造');
+                    CatRequest.postToBuildHouse(mapid,function(result){
+                    console.log('开始建造 finish');
+                });
+                }
+                else {
+                    console.log('已有建筑在造');
+                }
+
+            });
+
+        }else{
+            console.log('自动升级未勾选')
+        }
+    }
 
     /**
      * 只去打国战
@@ -166,7 +193,7 @@
         console.log('@goCountry');
         if(gameConfig.battle.country===true&&gameConfig.battle.field===false){
             $('#villagemap').each(function(){//在村庄时
-                console.log('goCountryBattle start');
+                    console.log('goCountryBattle start');
                 CatRequest.postToCountryBattle(function(result){
                     console.log('goCountryBattle finish');
                 });
@@ -260,6 +287,74 @@
     };
 
     /**
+     * 检测建造粮仓资源是否足够
+     */
+
+    var resourcesHouse=function(callback){
+        var resources=CatCount.getResources();
+        var map_id=0;
+        var _map_id=0;
+        var minLV=999;
+        var targetMapId=0;
+        var isFind=false;
+        var count=0;
+        var buildTypes='';
+        if(gameConfig.build.Granary===true){
+            buildTypes+='.type16,'
+        }
+        if(gameConfig.build.Paddy===true){
+            buildTypes+='.type17,'
+        }
+        if(gameConfig.build.Treasury===true){
+            buildTypes+='.type02,'
+        }
+        buildTypes=buildTypes.substr(0,buildTypes.length-1);
+        console.log(buildTypes);
+        //console.log(resources);
+        $('#mapbg').find(buildTypes).each(function(){//寻找地图上粮仓,水田,宝库
+        var _alt=$(this).attr('alt');
+            map_id=$(this).attr('class').substr(0,5);
+            _map_id=GameData.mapid[map_id];
+            //当前建筑升级资源是否充足
+            GameData.typeBuild.forEach(function(facilityObj){
+                    var searchIndex=_alt.indexOf(facilityObj['typeName']);
+                    var currentLV=0;
+                    if(searchIndex>=0){//找到
+                        currentLV= parseInt(_alt.match(/(\d+)/)[1]);
+
+                        if(minLV>currentLV){//寻找最低等级建筑
+                            minLV=currentLV;
+                            targetMapId=_map_id
+                        }
+
+                        var flag=true;//用于标示建造当前建筑资源是否足够
+                        resources.forEach(function(value,index){
+                            if(value<GameData[facilityObj['dataKey']]['level'+(currentLV+1)][index]){
+                                console.log('建造',facilityObj['typeName'],'资源不足');
+                                flag=false;
+                            }
+                        });
+                        if(flag){//资源足够建造
+                            isFind=true;
+                        }
+                    }
+            });
+        });
+
+        if(isFind){
+            callback(targetMapId);
+            count++;
+            console.log(count);
+            return false;
+        }
+
+
+    }
+
+
+
+
+    /**
      * 20130513
      * 新增根据配置判断是否执行一键打野
      * ------------------------
@@ -294,8 +389,9 @@
             RM.register('/village.htm',function(){
                 console.log('@village');
                 CatCount.getBuilded();
-                goCountryBattle();
-                goPointBattle();
+                goBuildHouse();//建造
+                goCountryBattle();//里战
+                goPointBattle(); //道场
             }).register('/area_map.htm',function(){
                     console.log('@area_map');
                     CatCount.initGameName();

@@ -14,7 +14,12 @@ var DefaultConfig = {
         goCountryList:[],
         minFood:300
     },
-    build: {},
+    build: {
+        buildUpdate:false,
+        Granary:false,
+        Paddy:false,
+        Treasury:false
+    },
     deck: {},
     trade: {},
     card: {},

@@ -29,11 +29,11 @@ var CatCount=(function($,SwapMyCookieMessage){
      */
     function getResources(){
         var resources=[];
-        resources.push('火'+$("#element_fire").text());
-        resources.push('地'+$("#element_earth").text());
-        resources.push('风'+$("#element_wind").text());
-        resources.push('水'+$("#element_water").text());
-        resources.push('空'+$("#element_sky").text());
+        resources.push(parseInt($("#element_fire").text()));
+        resources.push(parseInt($("#element_earth").text()));
+        resources.push(parseInt($("#element_wind").text()));
+        resources.push(parseInt($("#element_water").text()));
+        resources.push(parseInt($("#element_sky").text()));
         return resources;
     }
 
@@ -113,8 +113,7 @@ var CatCount=(function($,SwapMyCookieMessage){
         request:request,
         initGameName:initGameName,
         getBuilded:getBuilded,
+        getResources:getResources
     }
-
-
 
 })(jQuery,SwapMyCookieMessage);
