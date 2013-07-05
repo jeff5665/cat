@@ -94,6 +94,39 @@ var CatRequest=(function(){
              },
 
             /**
+             * 自动升级卡片请求
+             * @param callBack
+             * 3642296
+             */
+
+            postToCardUpdate:function(card_id,callBack){
+                var reqData={
+                    url:'http://nobunyaga.86game.com/command.htm',
+                    httpMethod:'POST',
+                    headers:'Content-Type=application%2Fx-www-form-urlencoded',
+                    postData:'tabid=2&x=2&y=1&cardid='+card_id+'&command=train_fire',
+                    authz:'signed',
+                    st:gameMustData.st,
+                    contentType:'TEXT',
+                    numEntries:3,
+                    getSummaries:false,
+                    signOwner:true,
+                    signViewer:true,
+                    gadget:'http://nobunyaga.86game.com/gadget.xml',
+                    container:'default',
+                    bypassSpecCache:'',
+                    getFullHeaders:'false',
+                    oauthState:''
+                };
+                $.post('http://nyashindig.86game.com/shindig/gadgets/makeRequest',reqData,function(result){
+                    if(typeof callBack ==='function'){
+                        callBack(result);
+                    }
+                });
+            },
+
+
+            /**
              * 道场专用请求
              * @param callBack
              */

@@ -22,7 +22,9 @@ var DefaultConfig = {
     },
     deck: {},
     trade: {},
-    card: {},
+    card: {
+        cardUpdate:false
+    },
     other:{
         autoChangePage:false,
         autoRunInterval:30,

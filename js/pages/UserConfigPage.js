@@ -41,7 +41,7 @@
         }
 
         /**
-         * 粮仓,水田,宝库
+         * 自动升级,粮仓,水田,宝库
          */
         $('#buildUpdate,#Granary,#Paddy,#Treasury').change(function(){
             userConfig.build[$(this).attr('id')]=$(this).prop('checked');
@@ -53,6 +53,14 @@
          */
         $('#country,#field,#battle,#point').change(function(){
             userConfig.battle[$(this).attr('id')]=$(this).prop('checked');
+            saveConfig();
+        });
+
+        /**
+         * 卡片升级
+         */
+        $('#cardUpdate').change(function(){
+            userConfig.card[$(this).attr('id')]=$(this).prop('checked');
             saveConfig();
         });
 

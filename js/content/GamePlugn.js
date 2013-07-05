@@ -159,21 +159,53 @@
         console.log('@goHouse');
 
         if(gameConfig.build.buildUpdate===true){
-            resourcesHouse(function(mapid){         //callback回调获取要自动建造的地图位置id
-                if($('#doing').find('div:contains("扩建中")').length<=0){   //检测列表是否存在建造中
-                    console.log('可以提交自动建造');
-                    CatRequest.postToBuildHouse(mapid,function(result){
-                    console.log('开始建造 finish');
+            $('#villagemap').each(function(){//在村庄时
+
+                resourcesHouse(function(mapid){         //callback回调获取要自动建造的地图位置id
+                    if($('#doing').find('div:contains("扩建中")').length<=0){   //检测列表是否存在建造中
+                        console.log('可以提交自动建造');
+                        CatRequest.postToBuildHouse(mapid,function(result){
+                            console.log('开始建造 finish');
+                        });
+                    }
+                    else {
+                        console.log('已有建筑在造');
+                    }
                 });
+
+            })
+        }else{
+            console.log('自动升级建筑未勾选')
+        }
+    }
+
+    /**
+     * 自动升级卡片
+     */
+    var goUpdateCard=function(){
+        console.log('@goCard');
+        if(gameConfig.card.cardUpdate===true){
+
+                var card_id='3703064';
+                $('.reserve-group').find('.reserve-group2').each(function(){
+
+                })
+
+
+                if($('#doing').find('div:contains("修炼火")').length<=0){   //检测列表是否存在建造中
+                    console.log('可以提交自动升级卡片');
+                    CatRequest.postToCardUpdate(card_id,function(result){
+                        console.log('开始升级卡片 finish');
+                    });
                 }
                 else {
-                    console.log('已有建筑在造');
+                    console.log('已有卡片在升级');
                 }
-            });
 
         }else{
-            console.log('自动升级未勾选')
+            console.log('自动升级卡片未勾选')
         }
+
     }
 
     /**
@@ -384,6 +416,7 @@
                 goBuildHouse();//建造
                 goCountryBattle();//里战
                 goPointBattle(); //道场
+                goUpdateCard();//自动升级卡片
             }).register('/area_map.htm',function(){
                     console.log('@area_map');
                     CatCount.initGameName();
