@@ -128,12 +128,7 @@
                 req.postToChangeCountry(nextCountryId,function(){
                     console.log('移动请求发送成功');
                 })
-
             });
-
-
-
-
         };
     };
 
@@ -157,7 +152,6 @@
 
     /**
      * 自动建造
-     * 只有“国战”勾选 “打野”不勾才触发
      * @param config
      * @param req
      */
@@ -165,8 +159,8 @@
         console.log('@goHouse');
 
         if(gameConfig.build.buildUpdate===true){
-            resourcesHouse(function(mapid){
-                if($('#doing').find('div:contains("扩建中")').length<=0){
+            resourcesHouse(function(mapid){         //callback回调获取要自动建造的地图位置id
+                if($('#doing').find('div:contains("扩建中")').length<=0){   //检测列表是否存在建造中
                     console.log('可以提交自动建造');
                     CatRequest.postToBuildHouse(mapid,function(result){
                     console.log('开始建造 finish');
@@ -175,7 +169,6 @@
                 else {
                     console.log('已有建筑在造');
                 }
-
             });
 
         }else{
@@ -292,14 +285,14 @@
 
     var resourcesHouse=function(callback){
         var resources=CatCount.getResources();
-        var map_id=0;
-        var _map_id=0;
-        var minLV=999;
-        var targetMapId=0;
-        var isFind=false;
-        var count=0;
-        var buildTypes='';
-        if(gameConfig.build.Granary===true){
+        var map_id=0;             //获取地图位置
+        var _map_id=0;            //地图位置对应提交信息
+        var minLV=999;            //最低建筑等级
+        var targetMapId=0;        //要自动升级的建筑地图ID
+        var isFind=false;        //是否找到可自动升级的内容
+        var count=0;              //测试代码
+        var buildTypes='';        //要自动升级的建筑类型
+        if(gameConfig.build.Granary===true){           //检测配置文件
             buildTypes+='.type16,'
         }
         if(gameConfig.build.Paddy===true){
@@ -309,18 +302,17 @@
             buildTypes+='.type02,'
         }
         buildTypes=buildTypes.substr(0,buildTypes.length-1);
-        console.log(buildTypes);
-        //console.log(resources);
+
         $('#mapbg').find(buildTypes).each(function(){//寻找地图上粮仓,水田,宝库
         var _alt=$(this).attr('alt');
-            map_id=$(this).attr('class').substr(0,5);
-            _map_id=GameData.mapid[map_id];
+        map_id=$(this).attr('class').substr(0,5);
+        _map_id=GameData.mapid[map_id];                           //转换地图位置为提交代码
             //当前建筑升级资源是否充足
             GameData.typeBuild.forEach(function(facilityObj){
                     var searchIndex=_alt.indexOf(facilityObj['typeName']);
-                    var currentLV=0;
+                    var currentLV=0;           //当前建筑等级
                     if(searchIndex>=0){//找到
-                        currentLV= parseInt(_alt.match(/(\d+)/)[1]);
+                        currentLV= parseInt(_alt.match(/(\d+)/)[1]);         //获取当前检测到的建筑等级
 
                         if(minLV>currentLV){//寻找最低等级建筑
                             minLV=currentLV;
@@ -341,9 +333,9 @@
             });
         });
 
-        if(isFind){
+        if(isFind){                      //找到可升级建筑,callback可建造地图位置(提交信息)
             callback(targetMapId);
-            count++;
+            count++;                              //测试代码
             console.log(count);
             return false;
         }
