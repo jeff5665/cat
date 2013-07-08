@@ -159,18 +159,19 @@
         console.log('@goHouse');
 
         if(gameConfig.build.buildUpdate===true){
-            resourcesHouse(function(mapid){         //callback回调获取要自动建造的地图位置id
-                if($('#doing').find('div:contains("扩建中")').length<=0){   //检测列表是否存在建造中
-                    console.log('可以提交自动建造');
-                    CatRequest.postToBuildHouse(mapid,function(result){
-                    console.log('开始建造 finish');
+            $('#villagemap').each(function(){//在村庄时
+                resourcesHouse(function(mapid){         //callback回调获取要自动建造的地图位置id
+                    if($('#doing').find('div:contains("扩建中")').length<=0){   //检测列表是否存在建造中
+                        console.log('可以提交自动建造');
+                        CatRequest.postToBuildHouse(mapid,function(result){
+                        console.log('开始建造 finish');
+                    });
+                    }
+                    else {
+                        console.log('已有建筑在造');
+                    }
                 });
-                }
-                else {
-                    console.log('已有建筑在造');
-                }
-            });
-
+            })
         }else{
             console.log('自动升级未勾选')
         }
