@@ -22,7 +22,12 @@ var DefaultConfig = {
     },
     deck: {},
     trade: {},
-    card: {},
+    card: {
+        cardUpdate:false,
+        minResources:"600,600,600,600,600",
+        cardName:"",
+        updateAddress:""
+    },
     other:{
         autoChangePage:false,
         autoRunInterval:30,
