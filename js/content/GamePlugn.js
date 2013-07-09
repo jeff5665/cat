@@ -1,4 +1,4 @@
-﻿var GamePlugn=(function($,U,GD,RM,Timer,CatRequest,CatCount){
+﻿﻿var GamePlugn=(function($,U,GD,RM,Timer,CatRequest,CatCount){
     //$ = Jquery
     //U = JUtil
     //GD = GameData
