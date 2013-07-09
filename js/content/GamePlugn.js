@@ -152,15 +152,11 @@
 
     /**
      * 自动建造
-     * @param config
-     * @param req
      */
     var goBuildHouse=function(){
         console.log('@goHouse');
-
         if(gameConfig.build.buildUpdate===true){
             $('#villagemap').each(function(){//在村庄时
-
                 resourcesHouse(function(mapid){         //callback回调获取要自动建造的地图位置id
                     if($('#doing').find('div:contains("扩建中")').length<=0){   //检测列表是否存在建造中
                         console.log('可以提交自动建造');
@@ -172,7 +168,6 @@
                         console.log('已有建筑在造');
                     }
                 });
-
             })
         }else{
             console.log('自动升级建筑未勾选')
@@ -184,26 +179,45 @@
      */
     var goUpdateCard=function(){
         console.log('@goCard');
-        if(gameConfig.card.cardUpdate===true){
-
-                var card_id='3703064';
+        if(gameConfig.card.cardUpdate===true&&gameConfig.card.cardName!=''&&gameConfig.card.updateAddress!=''&&gameConfig.card.minResources!=''){
+            $('#villagemap').each(function(){//在村庄时
+                if(!hasCardResources()){     //升级卡片资源不足
+                    return false;
+                }
+                var card_id='';    //3642296
+                var _card='';
+                var _card_name='';
+                var cardName=$.trim(gameConfig.card.cardName);
+                var _map_id=$.trim(gameConfig.card.updateAddress);          //x=2&y=1
+                var map_id=GameData.mapid[_map_id];
+                if(map_id==undefined){
+                    console.log('配置的修炼场id错误不存在');
+                    return false;
+                }
                 $('.reserve-group').find('.reserve-group2').each(function(){
-
+                    _card=$(this).find('img.reserve-face').attr('class').substr(12,7)
+                    _card_name=$(this).find('img.reserve-face').attr('alt');
+                    if(_card_name==cardName){               //岛津家喵        梅姬喵
+                        card_id=_card;
+                    }
                 })
-
-
-                if($('#doing').find('div:contains("修炼火")').length<=0){   //检测列表是否存在建造中
+                if(card_id==''){
+                    console.log('配置的武将不存在');
+                    return false;
+                }
+                if($('#doing').find('div:contains("修炼")').length<=0){   //检测列表是否存在建造中
                     console.log('可以提交自动升级卡片');
-                    CatRequest.postToCardUpdate(card_id,function(result){
-                        console.log('开始升级卡片 finish');
-                    });
+                        CatRequest.postToCardUpdate(map_id,card_id,function(result){
+                            console.log('开始升级卡片 finish');
+                        });
                 }
                 else {
                     console.log('已有卡片在升级');
                 }
 
+            })
         }else{
-            console.log('自动升级卡片未勾选')
+            console.log('自动升级卡片未勾选或关键配置参数为空')
         }
 
     }
@@ -242,8 +256,6 @@
             if(!hasFood()){//食物不足
                 return false;
             }
-
-
             $('#mainmap').find('area').each(function(){
                 var _alt=$(this).attr('alt');
                 if($.inArray(_alt,gameConfig.battle.fieldEnemyType)>-1){//找到自动打野的目标
@@ -312,7 +324,33 @@
     };
 
     /**
-     * 检测建造粮仓资源是否足够
+     * 检测升级卡片资源是否充足
+     * @returns {boolean}
+     */
+    var hasCardResources=function(){
+        var resources=CatCount.getResources();
+        var _resources=gameConfig.card.minResources.split(",");
+        //console.log(gameConfig.card.minResources);
+        var flag=true;      //用于标示升级当前卡片资源是否足够
+        resources.forEach(function(value,index){
+            if(value<_resources[index]){ //当所有资源满足最小设定值时,执行       .split(",")
+                flag=false;
+            }
+        });
+        console.log('2222',flag);
+        if(flag){//资源足够升级卡片
+            console.log('升级卡片资源充足');
+            return true;
+        }else{
+            console.log('升级卡片资源不足');
+            return false;
+        }
+
+    }
+
+
+    /**
+     * 检测建造建筑资源是否足够
      */
 
     var resourcesHouse=function(callback){
@@ -374,8 +412,6 @@
 
 
     }
-
-
 
 
     /**

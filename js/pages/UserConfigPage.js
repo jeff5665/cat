@@ -127,9 +127,42 @@
         $('#battle_minFood').each(function(){
             $(this).val(userConfig.battle.minFood)
                     .on('change',function(){
-                    userConfig.battle.minFood=$(this).text();
+                    userConfig.battle.minFood=$(this).val();
                     saveConfig();
             });
+        });
+
+        /**
+         * 设定卡片升级资源最小值
+         */
+        $('#card_minResources').each(function(){
+            $(this).val(userConfig.card.minResources)
+                    .on('change',function(){
+                    userConfig.card.minResources=$(this).val();
+                    saveConfig();
+                });
+        });
+
+        /**
+         * 设定要升级的卡片名字
+         */
+        $('#card_cardName').each(function(){
+            $(this).val(userConfig.card.cardName)
+                .on('change',function(){
+                    userConfig.card.cardName=$(this).val();
+                    saveConfig();
+                });
+        });
+
+        /**
+         * 设定要升级的卡片对应修炼场地址
+         */
+        $('#card_updateAddress').each(function(){
+            $(this).val(userConfig.card.updateAddress)
+                .on('change',function(){
+                    userConfig.card.updateAddress=$(this).val();
+                    saveConfig();
+                });
         });
 
 

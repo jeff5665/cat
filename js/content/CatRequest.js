@@ -96,15 +96,15 @@ var CatRequest=(function(){
             /**
              * 自动升级卡片请求
              * @param callBack
-             * 3642296
+             * 3642296        x=2&y=1
              */
 
-            postToCardUpdate:function(card_id,callBack){
+            postToCardUpdate:function(map_id,card_id,callBack){
                 var reqData={
                     url:'http://nobunyaga.86game.com/command.htm',
                     httpMethod:'POST',
                     headers:'Content-Type=application%2Fx-www-form-urlencoded',
-                    postData:'tabid=2&x=2&y=1&cardid='+card_id+'&command=train_fire',
+                    postData:'tabid=2&'+map_id+'&cardid='+card_id+'&command=train_fire',
                     authz:'signed',
                     st:gameMustData.st,
                     contentType:'TEXT',
