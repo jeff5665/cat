@@ -128,12 +128,7 @@
                 req.postToChangeCountry(nextCountryId,function(){
                     console.log('移动请求发送成功');
                 })
-
             });
-
-
-
-
         };
     };
 
@@ -155,6 +150,32 @@
         }
     };
 
+    /**
+     * 自动建造
+     * @param config
+     * @param req
+     */
+    var goBuildHouse=function(){
+        console.log('@goHouse');
+
+        if(gameConfig.build.buildUpdate===true){
+            $('#villagemap').each(function(){//在村庄时
+                resourcesHouse(function(mapid){         //callback回调获取要自动建造的地图位置id
+                    if($('#doing').find('div:contains("扩建中")').length<=0){   //检测列表是否存在建造中
+                        console.log('可以提交自动建造');
+                        CatRequest.postToBuildHouse(mapid,function(result){
+                        console.log('开始建造 finish');
+                    });
+                    }
+                    else {
+                        console.log('已有建筑在造');
+                    }
+                });
+            })
+        }else{
+            console.log('自动升级未勾选')
+        }
+    }
 
     /**
      * 只去打国战
@@ -166,7 +187,7 @@
         console.log('@goCountry');
         if(gameConfig.battle.country===true&&gameConfig.battle.field===false){
             $('#villagemap').each(function(){//在村庄时
-                console.log('goCountryBattle start');
+                    console.log('goCountryBattle start');
                 CatRequest.postToCountryBattle(function(result){
                     console.log('goCountryBattle finish');
                 });
@@ -260,6 +281,73 @@
     };
 
     /**
+     * 检测建造粮仓资源是否足够
+     */
+
+    var resourcesHouse=function(callback){
+        var resources=CatCount.getResources();
+        var map_id=0;             //获取地图位置
+        var _map_id=0;            //地图位置对应提交信息
+        var minLV=999;            //最低建筑等级
+        var targetMapId=0;        //要自动升级的建筑地图ID
+        var isFind=false;        //是否找到可自动升级的内容
+        var count=0;              //测试代码
+        var buildTypes='';        //要自动升级的建筑类型
+        if(gameConfig.build.Granary===true){           //检测配置文件
+            buildTypes+='.type16,'
+        }
+        if(gameConfig.build.Paddy===true){
+            buildTypes+='.type17,'
+        }
+        if(gameConfig.build.Treasury===true){
+            buildTypes+='.type02,'
+        }
+        buildTypes=buildTypes.substr(0,buildTypes.length-1);
+
+        $('#mapbg').find(buildTypes).each(function(){//寻找地图上粮仓,水田,宝库
+        var _alt=$(this).attr('alt');
+        map_id=$(this).attr('class').substr(0,5);
+        _map_id=GameData.mapid[map_id];                           //转换地图位置为提交代码
+            //当前建筑升级资源是否充足
+            GameData.typeBuild.forEach(function(facilityObj){
+                    var searchIndex=_alt.indexOf(facilityObj['typeName']);
+                    var currentLV=0;           //当前建筑等级
+                    if(searchIndex>=0){//找到
+                        currentLV= parseInt(_alt.match(/(\d+)/)[1]);         //获取当前检测到的建筑等级
+
+                        if(minLV>currentLV){//寻找最低等级建筑
+                            minLV=currentLV;
+                            targetMapId=_map_id
+                        }
+
+                        var flag=true;//用于标示建造当前建筑资源是否足够
+                        resources.forEach(function(value,index){
+                            if(value<GameData[facilityObj['dataKey']]['level'+(currentLV+1)][index]){
+                                console.log('建造',facilityObj['typeName'],'资源不足');
+                                flag=false;
+                            }
+                        });
+                        if(flag){//资源足够建造
+                            isFind=true;
+                        }
+                    }
+            });
+        });
+
+        if(isFind){                      //找到可升级建筑,callback可建造地图位置(提交信息)
+            callback(targetMapId);
+            count++;                              //测试代码
+            console.log(count);
+            return false;
+        }
+
+
+    }
+
+
+
+
+    /**
      * 20130513
      * 新增根据配置判断是否执行一键打野
      * ------------------------
@@ -294,8 +382,9 @@
             RM.register('/village.htm',function(){
                 console.log('@village');
                 CatCount.getBuilded();
-                goCountryBattle();
-                goPointBattle();
+                goBuildHouse();//建造
+                goCountryBattle();//里战
+                goPointBattle(); //道场
             }).register('/area_map.htm',function(){
                     console.log('@area_map');
                     CatCount.initGameName();

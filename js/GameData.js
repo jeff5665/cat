@@ -1,4 +1,21 @@
 var GameData = {
+    typeBuild:[
+        {
+            typeStr:'type16',
+            typeName:'兵粮库',
+            dataKey:'Granary'
+        },
+        {
+            typeStr:'type17',
+            typeName:'水田',
+            dataKey:'Paddy'
+        },
+        {
+            typeStr:'type02',
+            typeName:'宝物库',
+            dataKey:'Treasury'
+        }
+    ],
     country: {
         '伊达家':1,
         '最上家':2,
@@ -16,6 +33,62 @@ var GameData = {
         '龙造寺家':14,
         '大友家':15,
         '岛津家':16
+    },
+    mapid:{
+        'map00':'x=0&y=0',
+        'map01':'x=1&y=0',
+        'map02':'x=2&y=0',
+        'map05':'x=0&y=1',
+        'map06':'x=1&y=1',
+        'map07':'x=2&y=1',
+        'map08':'x=3&y=1',
+        'map10':'x=0&y=2',
+        'map11':'x=1&y=2',
+        'map12':'x=2&y=2',
+        'map13':'x=3&y=2',
+        'map14':'x=4&y=2',
+        'map16':'x=1&y=3',
+        'map17':'x=2&y=3',
+        'map18':'x=3&y=3',
+        'map19':'x=4&y=3',
+        'map22':'x=2&y=4',
+        'map23':'x=3&y=4',
+        'map24':'x=4&y=4'
+    },
+    Granary: {//粮仓升级所需资源
+        level1:[0,8,4,0,1],
+        level2:[0,18,10,0,3],
+        level3:[0,40,24,0,8],
+        level4:[0,76,45,0,15],
+        level5:[0,130,78,0,26],
+        level6:[0,206,123,0,41],
+        level7:[0,308,184,0,61],
+        level8:[0,442,265,0,88],
+        level9:[0,616,369,0,123]
+    },
+
+    Paddy:{//水田升级所需资源
+        level1:[0,8,0,9,6],
+        level2:[0,18,0,20,13],
+        level3:[0,37,0,43,27],
+        level4:[0,70,0,80,50],
+        level5:[0,119,0,136,85],
+        level6:[0,187,0,214,133],
+        level7:[0,278,0,318,199],
+        level8:[0,395,0,452,289],
+        level9:[0,542,0,620,387]
+    },
+
+    Treasury:{//宝物库升级所需资源
+        level1:[8,0,0,4,1],
+        level2:[18,0,0,10,3],
+        level3:[40,0,0,24,8],
+        level4:[76,0,0,45,15],
+        level5:[130,0,0,78,26],
+        level6:[206,0,0,123,41],
+        level7:[308,0,0,184,61],
+        level8:[442,0,0,265,88],
+        level9:[616,0,0,369,123]
     },
     enemyType: ['山贼', '忍者', '敌军', '强盗', '海贼'],
     enemyLevel: {
@@ -339,6 +412,5 @@ var GameData = {
         4052: {catName: '佐佐猫政', rare: '普', catAttr: '风', job: '武士', soilder: '铁炮', cost: 2, atk: 90, def: 51, speed: 91, rp: 44, int: 36, total: 312, mem: '早合', marketPrice: '170'},
         2037: {catName: '佐佐喵小次郎', rare: '稀', catAttr: '火', job: '剑豪', soilder: '足轻', cost: 2.5, atk: 96, def: 72, speed: 81, rp: 51, int: 66, total: 366, mem: '#N/A', marketPrice: '#N/A'}
     }
-
-
 };
+

@@ -40,7 +40,13 @@
             //$('#'+key).prop()
         }
 
-
+        /**
+         * 粮仓,水田,宝库
+         */
+        $('#buildUpdate,#Granary,#Paddy,#Treasury').change(function(){
+            userConfig.build[$(this).attr('id')]=$(this).prop('checked');
+            saveConfig();
+        });
 
         /**
          * 国战，打野，合战，道场
