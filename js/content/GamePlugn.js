@@ -158,7 +158,7 @@
         if(gameConfig.build.buildUpdate===true){
             $('#villagemap').each(function(){//在村庄时
                 resourcesHouse(function(mapid){         //callback回调获取要自动建造的地图位置id
-                    if($('#doing').find('div:contains("扩建中")').length<=0){   //检测列表是否存在建造中
+                    if($('#doing').find('div:contains("扩建")').length<=0){   //检测列表是否存在建造中
                         console.log('可以提交自动建造');
                         CatRequest.postToBuildHouse(mapid,function(result){
                             console.log('开始建造 finish');
@@ -190,7 +190,7 @@
                 var cardName=$.trim(gameConfig.card.cardName);
                 var _map_id=$.trim(gameConfig.card.updateAddress);          //x=2&y=1
                 var map_id=GameData.mapid[_map_id];
-                if(map_id==undefined){
+                if(map_id===undefined){
                     console.log('配置的修炼场id错误不存在');
                     return false;
                 }
@@ -201,7 +201,7 @@
                         card_id=_card;
                     }
                 })
-                if(card_id==''){
+                if(card_id===''){
                     console.log('配置的武将不存在');
                     return false;
                 }
@@ -387,6 +387,11 @@
                         if(minLV>currentLV){//寻找最低等级建筑
                             minLV=currentLV;
                             targetMapId=_map_id
+                        }
+
+                        if(currentLV===9){
+                            console.log("建筑都已达到LV9最高等级")
+                            return false;
                         }
 
                         var flag=true;//用于标示建造当前建筑资源是否足够
