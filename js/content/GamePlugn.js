@@ -190,6 +190,8 @@
                 var cardName=$.trim(gameConfig.card.cardName);
                 var _map_id=$.trim(gameConfig.card.updateAddress);          //x=2&y=1
                 var map_id=GameData.mapid[_map_id];
+                var card_Attr=gameConfig.card.cardAttr;
+                console.log('2222',card_Attr);
                 if(map_id===undefined){
                     console.log('配置的修炼场id错误不存在');
                     return false;
@@ -207,7 +209,7 @@
                 }
                 if($('#doing').find('div:contains("修炼")').length<=0){   //检测列表是否存在建造中
                     console.log('可以提交自动升级卡片');
-                        CatRequest.postToCardUpdate(map_id,card_id,function(result){
+                        CatRequest.postToCardUpdate(map_id,card_id,card_Attr,function(result){
                             console.log('开始升级卡片 finish');
                         });
                 }
@@ -337,7 +339,7 @@
                 flag=false;
             }
         });
-        console.log('2222',flag);
+
         if(flag){//资源足够升级卡片
             console.log('升级卡片资源充足');
             return true;

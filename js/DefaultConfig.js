@@ -26,6 +26,7 @@ var DefaultConfig = {
         cardUpdate:false,
         minResources:"600,600,600,600,600",
         cardName:"",
+        cardAttr:"fire",
         updateAddress:""
     },
     other:{
