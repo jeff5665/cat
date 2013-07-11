@@ -18,7 +18,51 @@ var DefaultConfig = {
         buildUpdate:false,
         Granary:false,
         Paddy:false,
-        Treasury:false
+        Treasury:false,
+        newBuild:false,
+        map:{
+            map01:{
+                buildT:'food',
+                isbuild:false
+            },
+            map05:{
+                buildT:'food',
+                isbuild:false
+            },
+            map02:{
+                buildT:'paddy',
+                isbuild:false
+            },
+            map10:{
+                buildT:'paddy',
+                isbuild:false
+            },
+            map07:{
+                buildT:'storage',
+                isbuild:false
+            },
+            map11:{
+                buildT:'storage',
+                isbuild:false
+            },
+            map13:{
+                buildT:'earth',
+                isbuild:false
+            },
+            map18:{
+                buildT:'water',
+                isbuild:false
+            },
+            map17:{
+                buildT:'wind',
+                isbuild:false
+            },
+            map16:{
+                buildT:'sky',
+                isbuild:false
+            }
+        }
+
     },
     deck: {},
     trade: {},

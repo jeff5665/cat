@@ -151,7 +151,7 @@
     };
 
     /**
-     * 自动建造
+     * 自动升级建筑
      */
     var goBuildHouse=function(){
         console.log('@goHouse');
@@ -171,6 +171,31 @@
             })
         }else{
             console.log('自动升级建筑未勾选')
+        }
+    }
+
+    /**
+     * 自动建造建筑(新手)
+     */
+    var goNewHouse=function(){
+        console.log('@goNewHouse');
+        if(gameConfig.build.newBuild===true){
+            $('#villagemap').each(function(){//在村庄时
+                newHouse(function(mapid,buildType){         //callback回调获取要自动建造的地图位置id
+                    if($('#doing').find('div:contains("建造")').length<=0){   //检测列表是否存在建造中
+                        console.log('可以提交自动建造(新手)');
+                        console.log('1111',mapid,buildType);
+                        CatRequest.postToNewBuild(mapid,buildType,function(result){
+                            console.log('开始自动建造(新手) finish');
+                        });
+                    }
+                    else {
+                        console.log('已有建筑在造(新手)');
+                    }
+                });
+            })
+        }else{
+            console.log('自动建筑(新手)未勾选')
         }
     }
 
@@ -339,7 +364,6 @@
                 flag=false;
             }
         });
-
         if(flag){//资源足够升级卡片
             console.log('升级卡片资源充足');
             return true;
@@ -347,7 +371,6 @@
             console.log('升级卡片资源不足');
             return false;
         }
-
     }
 
 
@@ -420,6 +443,38 @@
 
     }
 
+    /**
+     * 检测建造建筑资源是否足够
+     */
+
+    var newHouse=function(callback){
+        var map_id='';             //获取地图位置
+        var targetMapId='';        //要自动升级的建筑地图ID
+        var count=0;              //测试代码
+        var buildType='';        //要自动建造的建筑类型
+         var mapKey='';          //获取配置文件中的配置
+        var mapValue='';
+         for(mapKey in gameConfig.build.map){
+            mapValue=gameConfig.build.map[mapKey];
+            if(mapValue['isbuild']===true){           //检测配置文件
+                map_id=($('.'+mapKey).attr('class').match(/(type\d+)/)||[])[1];      //获取地图上目前的建筑类型
+                if(map_id==='type00'){          //地图上建筑为空,执行建造
+                    buildType=mapValue['buildT'];               //建筑类型设置
+                    targetMapId=GameData.mapid[mapKey];         //地图位置转换后的提交代码
+                }
+            }
+
+        }
+        if(targetMapId===''){
+            console.log('自动建造都已完成');
+            return false;
+        }
+        callback(targetMapId,buildType);
+        count++;                              //测试代码
+        console.log(count);
+        return false;
+    }
+
 
     /**
      * 20130513
@@ -456,7 +511,8 @@
             RM.register('/village.htm',function(){
                 console.log('@village');
                 CatCount.getBuilded();
-                goBuildHouse();//建造
+                goBuildHouse();//自动升级建筑
+                goNewHouse();//自动建造(新手)
                 goCountryBattle();//里战
                 goPointBattle(); //道场
                 goUpdateCard();//自动升级卡片
