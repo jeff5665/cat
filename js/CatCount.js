@@ -93,6 +93,7 @@ var CatCount=(function($,SwapMyCookieMessage){
             gamename:gamename,
             money:$('#lottery_point').text(),
             food:$('#element_food').text(),
+            maxfood:$('#max_food').text(),
             army:getArmy(),
             trade:getTrade(),
             builded:builded.toString(),
