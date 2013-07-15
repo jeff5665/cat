@@ -17,7 +17,7 @@ var RouteManger=(function(){
      */
     var init=function(){
 
-        changeRoute('/village.htm');
+        changeRoute('/init');
         $('#main').find('a[href="/world_list.htm"]').find('img').click();
 
 

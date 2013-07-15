@@ -505,6 +505,14 @@
 
 
     var init=function(){
+        RM.register('/init',function(){                         //增加自动跳过游戏开始按钮
+            console.log('In init');
+            $('a[href="/world_list.htm"]').each(function(){
+                console.log('find world_list');
+                $(this).find('img').click();
+            });
+        });
+
         RM.init();
         initGameConfig(function(){
             Timer.setCountDownTotalTime(gameConfig.other.autoRunInterval);
