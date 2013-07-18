@@ -99,7 +99,7 @@ var CatCount=(function($,SwapMyCookieMessage){
             builded:builded.toString(),
             resources:getResources().toString(),
             blood:getBlood(),
-            lasttime:new Date().toLocaleString(),
+            lasttime:JUtil.getTimeStr(),
             user_id:user_id
         };
         console.log(reqData);

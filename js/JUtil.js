@@ -47,9 +47,40 @@ var JUtil=(function(){
 
     };
 
+    var  getTimeStr=function(format) {
+        var _format=format||"yyyy-mm-dd hh:mm:ss";
+        var datetime = new Date();
+        var year = datetime.getFullYear();
+        var month = datetime.getMonth()+1;
+        if(month<10){
+            month='0'+month;
+        }
+        var day = datetime.getDate();
+        if(day<10){
+            day='0'+day;
+        }
+        var hour = datetime.getHours();
+        if(hour<10){
+            hour='0'+hour;
+        }
+        var minute = datetime.getMinutes();
+        if(minute<10){
+            minute='0'+minute;
+        }
+        var second = datetime.getSeconds();
+        if(second<10){
+            second='0'+second;
+        }
+
+        var targetStr=_format.replace('yyyy',year).replace('mm',month).replace('dd',day).replace('hh',hour).replace('mm',minute).replace('ss',second);
+        // var targetStr = year + '-' + month + '-' + day + ' '  + hour + ':' + minute + ':' + second;
+        return targetStr;
+    }
+
     return {
         getUrlParams:getUrlParams,
         unsafeWindow:getUnsafeWindow,
+        getTimeStr:getTimeStr,
         unique:unique
     }
 })();
