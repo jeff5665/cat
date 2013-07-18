@@ -1,6 +1,6 @@
 ﻿{
   "name" : "信猫 插件",
-  "version" : "0.1.9",
+  "version" : "0.2.0",
   "description" : "信猫 Chrome 专用的插件",
   "background" : {
     "scripts": ["lib/jquery.js","js/DefaultConfig.js","js/background/background.js"]
