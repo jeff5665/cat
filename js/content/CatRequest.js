@@ -93,8 +93,7 @@ var CatRequest=(function(){
                  });
              },
 
-<<<<<<< HEAD
-=======
+
             /**
              * 自动升级卡片请求
              * @param callBack
@@ -128,7 +127,6 @@ var CatRequest=(function(){
             },
 
 
->>>>>>> 46a3db3e7f7fbb6c4b5914b3f8019f1f246e4c82
             /**
              * 道场专用请求
              * @param callBack
