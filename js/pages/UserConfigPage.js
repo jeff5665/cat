@@ -53,6 +53,22 @@
         });
 
         /**
+         * 自动建造(新手)
+         */
+        $('#newBuild').change(function(){
+            userConfig.build[$(this).attr('id')]=$(this).prop('checked');
+            saveConfig();
+        });
+        $('#map01,#map05,#map02,#map10,#map07,#map11,#map13,#map18,#map17,#map16').each(function(){
+              if(userConfig.build['map'][$(this).attr('id')]['isbuild']){
+                  $(this).attr('checked','checked');
+              }
+        }).change(function(){
+            userConfig.build['map'][$(this).attr('id')]['isbuild']=$(this).prop('checked');
+            saveConfig();
+        });
+
+        /**
          * 国战，打野，合战，道场
          */
         $('#country,#field,#battle,#point').change(function(){
@@ -159,6 +175,28 @@
         });
 
         /**
+         * 设定要升级的卡片属性
+         */
+
+        $('input[name="card_cardAttr"]').each(function(){
+            var cardAttr=$(this).attr('value');
+            if(cardAttr===userConfig.card.cardAttr){
+                $(this).attr('checked','checked');
+            }
+            $(this).on('click',function(){
+                    userConfig.card.cardAttr=$(this).val();
+                    saveConfig();
+                console.log(cardAttr);
+                    if(cardAttr===userConfig.card.cardAttr){
+                        $(this).on('click','click')
+                    }
+                })
+        });
+
+
+
+
+        /**
          * 设定要升级的卡片对应修炼场地址
          */
         $('#card_updateAddress').each(function(){
@@ -168,7 +206,6 @@
                     saveConfig();
                 });
         });
-
 
         /**
          * 自动切换页面
@@ -220,7 +257,6 @@
             window.location.reload(true);
             //todo 页面刷新后还是选中当前的TAB标签
         });
-
     });
 
 

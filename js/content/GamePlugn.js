@@ -151,32 +151,18 @@
     };
 
     /**
-     * 自动建造
-<<<<<<< HEAD
-     * @param config
-     * @param req
+     * 自动升级建筑
      */
     var goBuildHouse=function(){
         console.log('@goHouse');
-
-=======
-     */
-    var goBuildHouse=function(){
-        console.log('@goHouse');
->>>>>>> 46a3db3e7f7fbb6c4b5914b3f8019f1f246e4c82
         if(gameConfig.build.buildUpdate===true){
             $('#villagemap').each(function(){//在村庄时
                 resourcesHouse(function(mapid){         //callback回调获取要自动建造的地图位置id
-                    if($('#doing').find('div:contains("扩建中")').length<=0){   //检测列表是否存在建造中
+                    if($('#doing').find('div:contains("扩建")').length<=0){   //检测列表是否存在建造中
                         console.log('可以提交自动建造');
                         CatRequest.postToBuildHouse(mapid,function(result){
-<<<<<<< HEAD
-                        console.log('开始建造 finish');
-                    });
-=======
                             console.log('开始建造 finish');
                         });
->>>>>>> 46a3db3e7f7fbb6c4b5914b3f8019f1f246e4c82
                     }
                     else {
                         console.log('已有建筑在造');
@@ -184,11 +170,32 @@
                 });
             })
         }else{
-<<<<<<< HEAD
-            console.log('自动升级未勾选')
-        }
-=======
             console.log('自动升级建筑未勾选')
+        }
+    }
+
+    /**
+     * 自动建造建筑(新手)
+     */
+    var goNewHouse=function(){
+        console.log('@goNewHouse');
+        if(gameConfig.build.newBuild===true){
+            $('#villagemap').each(function(){//在村庄时
+                newHouse(function(mapid,buildType){         //callback回调获取要自动建造的地图位置id
+                    if($('#doing').find('div:contains("建造")').length<=0){   //检测列表是否存在建造中
+                        console.log('可以提交自动建造(新手)');
+                        console.log('1111',mapid,buildType);
+                        CatRequest.postToNewBuild(mapid,buildType,function(result){
+                            console.log('开始自动建造(新手) finish');
+                        });
+                    }
+                    else {
+                        console.log('已有建筑在造(新手)');
+                    }
+                });
+            })
+        }else{
+            console.log('自动建筑(新手)未勾选')
         }
     }
 
@@ -208,7 +215,9 @@
                 var cardName=$.trim(gameConfig.card.cardName);
                 var _map_id=$.trim(gameConfig.card.updateAddress);          //x=2&y=1
                 var map_id=GameData.mapid[_map_id];
-                if(map_id==undefined){
+                var card_Attr=gameConfig.card.cardAttr;
+                console.log('2222',card_Attr);
+                if(map_id===undefined){
                     console.log('配置的修炼场id错误不存在');
                     return false;
                 }
@@ -219,13 +228,13 @@
                         card_id=_card;
                     }
                 })
-                if(card_id==''){
+                if(card_id===''){
                     console.log('配置的武将不存在');
                     return false;
                 }
                 if($('#doing').find('div:contains("修炼")').length<=0){   //检测列表是否存在建造中
                     console.log('可以提交自动升级卡片');
-                        CatRequest.postToCardUpdate(map_id,card_id,function(result){
+                        CatRequest.postToCardUpdate(map_id,card_id,card_Attr,function(result){
                             console.log('开始升级卡片 finish');
                         });
                 }
@@ -238,7 +247,6 @@
             console.log('自动升级卡片未勾选或关键配置参数为空')
         }
 
->>>>>>> 46a3db3e7f7fbb6c4b5914b3f8019f1f246e4c82
     }
 
     /**
@@ -343,9 +351,6 @@
     };
 
     /**
-<<<<<<< HEAD
-     * 检测建造粮仓资源是否足够
-=======
      * 检测升级卡片资源是否充足
      * @returns {boolean}
      */
@@ -359,7 +364,6 @@
                 flag=false;
             }
         });
-        console.log('2222',flag);
         if(flag){//资源足够升级卡片
             console.log('升级卡片资源充足');
             return true;
@@ -367,13 +371,11 @@
             console.log('升级卡片资源不足');
             return false;
         }
-
     }
 
 
     /**
      * 检测建造建筑资源是否足够
->>>>>>> 46a3db3e7f7fbb6c4b5914b3f8019f1f246e4c82
      */
 
     var resourcesHouse=function(callback){
@@ -412,6 +414,11 @@
                             targetMapId=_map_id
                         }
 
+                        if(currentLV===9){
+                            console.log("建筑都已达到LV9最高等级")
+                            return false;
+                        }
+
                         var flag=true;//用于标示建造当前建筑资源是否足够
                         resources.forEach(function(value,index){
                             if(value<GameData[facilityObj['dataKey']]['level'+(currentLV+1)][index]){
@@ -436,12 +443,39 @@
 
     }
 
+    /**
+     * 检测建造建筑资源是否足够
+     */
 
-<<<<<<< HEAD
+    var newHouse=function(callback){
+        var map_id='';             //获取地图位置
+        var targetMapId='';        //要自动升级的建筑地图ID
+        var count=0;              //测试代码
+        var buildType='';        //要自动建造的建筑类型
+         var mapKey='';          //获取配置文件中的配置
+        var mapValue='';
+         for(mapKey in gameConfig.build.map){
+            mapValue=gameConfig.build.map[mapKey];
+            if(mapValue['isbuild']===true){           //检测配置文件
+                map_id=($('.'+mapKey).attr('class').match(/(type\d+)/)||[])[1];      //获取地图上目前的建筑类型
+                if(map_id==='type00'){          //地图上建筑为空,执行建造
+                    buildType=mapValue['buildT'];               //建筑类型设置
+                    targetMapId=GameData.mapid[mapKey];         //地图位置转换后的提交代码
+                }
+            }
+
+        }
+        if(targetMapId===''){
+            console.log('自动建造都已完成');
+            return false;
+        }
+        callback(targetMapId,buildType);
+        count++;                              //测试代码
+        console.log(count);
+        return false;
+    }
 
 
-=======
->>>>>>> 46a3db3e7f7fbb6c4b5914b3f8019f1f246e4c82
     /**
      * 20130513
      * 新增根据配置判断是否执行一键打野
@@ -471,19 +505,25 @@
 
 
     var init=function(){
+        RM.register('/init',function(){                         //增加自动跳过游戏开始按钮
+            console.log('In init');
+            $('a[href="/world_list.htm"]').each(function(){
+                console.log('find world_list');
+                $(this).find('img').click();
+            });
+        });
+
         RM.init();
         initGameConfig(function(){
             Timer.setCountDownTotalTime(gameConfig.other.autoRunInterval);
             RM.register('/village.htm',function(){
                 console.log('@village');
                 CatCount.getBuilded();
-                goBuildHouse();//建造
+                goBuildHouse();//自动升级建筑
+                goNewHouse();//自动建造(新手)
                 goCountryBattle();//里战
                 goPointBattle(); //道场
-<<<<<<< HEAD
-=======
                 goUpdateCard();//自动升级卡片
->>>>>>> 46a3db3e7f7fbb6c4b5914b3f8019f1f246e4c82
             }).register('/area_map.htm',function(){
                     console.log('@area_map');
                     CatCount.initGameName();
