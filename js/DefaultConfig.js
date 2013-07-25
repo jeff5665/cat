@@ -21,6 +21,10 @@ var DefaultConfig = {
         Treasury:false,
         newBuild:false,
         map:{
+            map10:{
+                buildT:'paddy',
+                isbuild:false
+            },
             map01:{
                 buildT:'food',
                 isbuild:false
@@ -29,16 +33,20 @@ var DefaultConfig = {
                 buildT:'food',
                 isbuild:false
             },
-            map02:{
-                buildT:'paddy',
-                isbuild:false
-            },
-            map10:{
-                buildT:'paddy',
-                isbuild:false
-            },
             map07:{
                 buildT:'storage',
+                isbuild:false
+            },
+            map16:{
+                buildT:'sky',
+                isbuild:false
+            },
+            map17:{
+                buildT:'wind',
+                isbuild:false
+            },
+            map18:{
+                buildT:'water',
                 isbuild:false
             },
             map11:{
@@ -49,16 +57,8 @@ var DefaultConfig = {
                 buildT:'earth',
                 isbuild:false
             },
-            map18:{
-                buildT:'water',
-                isbuild:false
-            },
-            map17:{
-                buildT:'wind',
-                isbuild:false
-            },
-            map16:{
-                buildT:'sky',
+            map02:{
+                buildT:'paddy',
                 isbuild:false
             }
         }
