@@ -21,6 +21,7 @@
         <li><a href="#deck_tab" data-toggle="tab">编队</a></li>
         <li><a href="#trade_tab" data-toggle="tab">交易所</a></li>
         <li><a href="#card_tab" data-toggle="tab">卡片</a></li>
+        <li><a href="#account_tab" data-toggle="tab">帐号</a></li>
         <li><a href="#other_tab" data-toggle="tab">其他</a></li>
     </ul>
     <div class="span12 tab-content">
@@ -249,6 +250,40 @@
                 </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="tab-pane" id="account_tab">
+            <table class="table table-bordered" id="accountListTable">
+                <thead>
+                <tr>
+                    <th>帐号名</th>
+                    <th>角色名</th>
+                    <th>阶段 (-1 未开号)</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <input type="text"/>
+                    </td>
+                    <td>
+                        <input type="text"/>
+                    </td>
+                    <td>
+                        <input type="text" value="-1"/>
+                    </td>
+                    <td>
+                        <button class="btn btn-small btn-danger"><i class="icon-white icon-remove-circle"></i>删除</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <button class="btn btn-success btn-mini J-addRow"><i class="icon-white icon-plus"></i> 增加一行</button>
+                <textarea class="J-template">
+
+                </textarea>
+            </div>
         </div>
     </div>
 </div>
