@@ -4,7 +4,7 @@
  * Time: 上午8:45
  */
 var DefaultConfig = {
-    version:"0.1.5",
+    version:"0.1.6",
     battle: {
         country: false,
         field: false,

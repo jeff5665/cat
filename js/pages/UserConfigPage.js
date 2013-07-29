@@ -1,11 +1,10 @@
 (function($,defaultConfig,JUtil){
     $(function(){
-        var VERSION="0.1.5";
         var userConfig={};
 
         if(localStorage['UserConfig']){
             userConfig = JSON.parse(localStorage['UserConfig']);
-            if(userConfig.version!==VERSION){
+            if(userConfig.version!==defaultConfig.version){
                 userConfig = defaultConfig;
                 localStorage['UserConfig'] = JSON.stringify(defaultConfig);
             }
@@ -41,11 +40,7 @@
         }
 
         /**
-<<<<<<< HEAD
-         * 粮仓,水田,宝库
-=======
          * 自动升级,粮仓,水田,宝库
->>>>>>> 46a3db3e7f7fbb6c4b5914b3f8019f1f246e4c82
          */
         $('#buildUpdate,#Granary,#Paddy,#Treasury').change(function(){
             userConfig.build[$(this).attr('id')]=$(this).prop('checked');
@@ -60,6 +55,7 @@
             saveConfig();
         });
         $('#map01,#map05,#map02,#map10,#map07,#map11,#map13,#map18,#map17,#map16').each(function(){
+                console.log('userConfig.build',userConfig.build);
               if(userConfig.build['map'][$(this).attr('id')]['isbuild']){
                   $(this).attr('checked','checked');
               }
