@@ -15,7 +15,42 @@ var Tutorial = (function ($,catRequest,RM,Timer,Account) {
     var currentAccount={};
     var commandFunc = {
         '##创建角色##0':function(){
+            $('a[href="/license.htm"]').each(function(){//自动进入游戏
+                console.log('find license');
+                clickOnce($(this).find('img').click());
+            });
+            $('a[href="/world_list.htm"]').each(function(){//条款同意后再次访问时
+                console.log('find license');
+                clickOnce($(this).find('img').click());
+            });
 
+
+            //只点一次
+            $('#license').find('input').each(function(){ //点 同意条款
+                clickOnce($(this));
+            });
+            $('#start-button').each(function(){ //同意条款页的 继续 按钮
+                clickOnce($(this));
+            });
+
+            $('#form_name').each(function(){//游戏角色名
+                if(currentAccount['gameName']&&currentAccount['gameName']!==''){
+                    $(this).val(currentAccount['gameName']);
+                    //$('#form-form').find('#form_name')
+                }
+            });
+
+
+            $('#form_mapid').each(function(){   //选国家
+                var n=0;
+                n = parseInt(Math.random()*15);
+                $(this).val(n);
+            });
+
+            $('#next-button').find('img').each(function(){  //选国家页 的“继续”按钮
+                console.log('选国家 找到“继续”按钮');
+                clickOnce($(this));
+            });
         },
         '##新手开始游戏##1': function () {
             console.log('新手开始游戏');
@@ -180,6 +215,19 @@ var Tutorial = (function ($,catRequest,RM,Timer,Account) {
 
     };
 
+    function clickOnce($tar){
+        if($tar.prop('onceclicked')){
+            $tar.attr('onceclicked');
+            $tar.click();
+        }
+
+    }
+
+
+    function nextStep(){
+        currentStep++;
+        currentAccount['step']=currentStep;
+    }
 
     /**
      *
@@ -215,23 +263,24 @@ var Tutorial = (function ($,catRequest,RM,Timer,Account) {
             });
             var dtd = $.Deferred();
             _config=config;
-            currentAccount=Account.getCurrentAccount();
-            if(currentAccount['gameName']===''){
-                alwaysGetGameName(currentAccount);
-            }
-            currentStep=currentAccount['step'];
-            Timer.setCountDownTotalTime(5);
-            Timer.addCountFunc(function(){
-                commandFunc[commandList[currentStep]]();
+            Account.getAccount(function(account){
+                currentAccount=account;
+                console.log('currentAccount',currentAccount);
+                currentStep=currentAccount['step'];
+                if(currentStep>commandList.length){//已经完成新手任务
+                    dtd.resolve();
+                }
 
+                console.log('currentStep',currentStep);
 
-
-
-
-
-
+                Timer.setCountDownTotalTime(5);
+                Timer.addCountFunc(function(){
+                    commandFunc[commandList[currentStep]]();
+                });
+                Timer.run();
             });
-            Timer.run();
+
+
             return dtd.promise();
         }
     }

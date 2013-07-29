@@ -1,22 +1,92 @@
-﻿(function($,defaultConfig){
+﻿var userConfig = (function(){
+    if (localStorage['UserConfig'] === undefined) {
+        localStorage['UserConfig'] = JSON.stringify(defaultConfig);
+        return defaultConfig;
+    } else {
+        return JSON.parse(localStorage['UserConfig']);
+    }
+})();
+
+
+
+var accountList=(function(){
+    if (localStorage['AccountList'] === undefined) {
+        return {};
+    } else {
+        return JSON.parse(localStorage['AccountList']);
+    }
+})();
+
+var currentAccountName=(function(){
+    if (localStorage['currentName'] === undefined) {
+        return {};
+    } else {
+        return JSON.parse(localStorage['currentName']);
+    }
+})();
+
+
+var currentAccount=(function(currentAccountName,accountList){
+    console.log('currentName!!!!!',currentAccountName);
+    if(currentAccountName!==''){
+        return accountList[currentAccountName]||{};
+    }else{
+        return {};
+    }
+})(currentAccountName,accountList);
+
+
+
+(function($,defaultConfig){
     $(function () {
-        var userConfig = {};
-        if (localStorage['UserConfig'] === undefined) {
-            userConfig = defaultConfig;
-            localStorage['UserConfig'] = JSON.stringify(defaultConfig);
-        } else {
-            userConfig = JSON.parse(localStorage['UserConfig']);
-        }
+        chrome.extension.onConnectExternal.addListener(function(port) {//侦听来自其他扩展的信息  (来自cookieSwap的信息)
+            port.onMessage.addListener(function(cookieSwapMsg) {
+                console.log('cookieSwapMsg',cookieSwapMsg);
+                var accountName=cookieSwapMsg['currentName'];
+                console.log('accountName!!!',accountName);
+                if(!accountList.hasOwnProperty(accountName)){//accoutList中不存在当前的accountName，往accountList中添加
+                    accountList[accountName]={};
+                    localStorage['AccountList'] = JSON.stringify(accountList);
+                }
+                localStorage['currentName'] = JSON.stringify(accountName);
+                console.log(accountName,accountList);
+
+                currentAccount=accountList[accountName];
+                currentAccount['accountName']=accountName;
+                console.log('current',currentAccount,accountList);
+            });
+        });
+
+
+
+
+
+
+
+
 
 
         var requestHandler = {
-            saveGameConfig: function (req) {
+           /* saveGameConfig: function (req) {
 
             },
             saveBattleConfig: function (req, sender, sendResponse) {//保存战斗配置
                 userConfig.battle = req.battle;
                 localStorage['GameConfig'] = JSON.stringify(userConfig);
+            },*/
+
+            updateAccount:function(req, sender, sendResponse){//为测试
+                currentAccount=req.account;
+                $.extend(accountList,currentAccount);
+                localStorage['AccountList'] = JSON.stringify(accountList);
+                sendResponse({status:'success'});
             },
+            getAccount:function(req, sender, sendResponse){//未测试
+                console.log('getAccount');
+                console.log(currentAccount);
+                sendResponse(currentAccount);
+            },
+
             getUserConfig: function (req, sender, sendResponse) {
                 sendResponse(userConfig);
                 console.log('@getUserConfig',userConfig);
@@ -36,6 +106,11 @@
                 }
 
 
+            },
+            reloadAccountList:function(req,sender,sendResponse){
+                console.log('reloadAccountList');
+               accountList =JSON.parse(localStorage['AccountList']) ;
+               sendResponse('background:: reloadAccountList 成功');
             }
 
         };

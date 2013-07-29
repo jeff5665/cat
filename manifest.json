@@ -8,7 +8,7 @@
   "content_scripts": [
     {
       "matches": ["http://nyashindig.86game.com/*"],
-      "js": ["lib/jquery.js","js/SwapMyCookieMessage.js","js/CatCount.js","js/JUtil.js","js/Timer.js","js/GameData.js","js/RouteManger.js","js/content/CatRequest.js" ,"js/content/GamePlugn.js","js/content/content_script.js"],
+      "js": ["lib/jquery.js","js/SwapMyCookieMessage.js","js/CatCount.js","js/JUtil.js","js/Timer.js","js/GameData.js","js/Account.js","js/RouteManger.js","js/content/CatRequest.js" ,"js/content/Tutorial.js","js/content/GamePlugn.js","js/content/content_script.js"],
 	  "all_frames":true
     }
   ],

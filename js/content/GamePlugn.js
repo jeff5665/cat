@@ -1,4 +1,4 @@
-﻿var GamePlugn=(function($,U,GD,RM,Timer,CatRequest,CatCount){
+﻿var GamePlugn=(function($,U,GD,RM,Timer,CatRequest,CatCount,Tutorial){
     //$ = Jquery
     //U = JUtil
     //GD = GameData
@@ -505,57 +505,64 @@
 
 
     var init=function(){
-        RM.register('/init',function(){                         //增加自动跳过游戏开始按钮
-            console.log('In init');
-            $('a[href="/world_list.htm"]').each(function(){
-                console.log('find world_list');
-                $(this).find('img').click();
+        $.when(Tutorial.init()).done(function () {//完成新手任务后
+            RM.register('/init', function () {//增加自动跳过游戏开始按钮
+                console.log('Finish Tutorial');
+                $('a[href="/world_list.htm"]').each(function () {
+                    console.log('find world_list');
+                    $(this).find('img').click();
+                });
+            });
+
+
+            initGameConfig(function () {
+                Timer.setCountDownTotalTime(gameConfig.other.autoRunInterval);
+                RM.register('/village.htm',function () {
+                    console.log('@village');
+                    CatCount.getBuilded();
+                    goBuildHouse();//自动升级建筑
+                    goNewHouse();//自动建造(新手)
+                    goCountryBattle();//里战
+                    goPointBattle(); //道场
+                    goUpdateCard();//自动升级卡片
+                }).register('/area_map.htm',function () {
+                        console.log('@area_map');
+                        CatCount.initGameName();
+                        oneKeyAutoFindBattle(function () {//找到敌人派出部队后去管理卡组页面获取出城部队的功勋后再提交
+                            RM.changeRoute('/card/manage_card.htm', function () {
+                                CatCount.request(gameConfig.other.user_id, gameConfig.other.requestURL);
+                            });
+                            $('#dmenu').find('a.item[href="/card/manage_card.htm"]').find('img').click();
+                        });
+                    }).register('/card/manage_card.htm',function () {
+                        showCardMem();
+                    }).register('培养武将',function () {
+                        showCardMem();
+                    }).register('出征武将',function () {
+                        showCardMem();
+                    }).register('保管武将',function () {
+                        showCardMem();
+                    }).register('名将谱', function () {
+                        showCardMem();
+                    });
+                Timer.addCountFunc(function (times) {//自动切换页面
+                    if (gameConfig.other.autoChangePage) {
+                        $('#dmenu').find('li.topitem').eq(times % 2).find('a').each(function () {//在村庄与地图页面来回切换
+                            RM.changeRoute($(this).attr('href'));
+                            $(this).find('img').click();
+                        });
+                    }
+                });
+                initUI(config.UI);
+                initBindEvent(config.JEvent);
+                Timer.run();
+                RM.init();
             });
         });
 
-        RM.init();
-        initGameConfig(function(){
-            Timer.setCountDownTotalTime(gameConfig.other.autoRunInterval);
-            RM.register('/village.htm',function(){
-                console.log('@village');
-                CatCount.getBuilded();
-                goBuildHouse();//自动升级建筑
-                goNewHouse();//自动建造(新手)
-                goCountryBattle();//里战
-                goPointBattle(); //道场
-                goUpdateCard();//自动升级卡片
-            }).register('/area_map.htm',function(){
-                    console.log('@area_map');
-                    CatCount.initGameName();
-                    oneKeyAutoFindBattle(function(){//找到敌人派出部队后去管理卡组页面获取出城部队的功勋后再提交
-                        RM.changeRoute('/card/manage_card.htm',function(){
-                            CatCount.request(gameConfig.other.user_id,gameConfig.other.requestURL);
-                        });
-                        $('#dmenu').find('a.item[href="/card/manage_card.htm"]').find('img').click();
-                    });
-                }).register('/card/manage_card.htm',function(){
-                    showCardMem();
-                }).register('培养武将',function(){
-                    showCardMem();
-                }).register('出征武将',function(){
-                    showCardMem();
-                }).register('保管武将',function(){
-                    showCardMem();
-                }).register('名将谱',function(){
-                    showCardMem();
-                });
-            Timer.addCountFunc(function(times){//自动切换页面
-                if(gameConfig.other.autoChangePage){
-                    $('#dmenu').find('li.topitem').eq(times%2).find('a').each(function(){//在村庄与地图页面来回切换
-                        RM.changeRoute($(this).attr('href'));
-                        $(this).find('img').click();
-                    });
-                }
-            });
-            initUI(config.UI);
-            initBindEvent(config.JEvent);
-            Timer.run();
-        });
+
+
+
 
     };
 
@@ -563,5 +570,5 @@
         init:init
     }
 
-})(jQuery,JUtil,GameData,RouteManger,Timer,CatRequest,CatCount);
+})(jQuery,JUtil,GameData,RouteManger,Timer,CatRequest,CatCount,Tutorial);
 
