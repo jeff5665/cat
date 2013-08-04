@@ -24,8 +24,6 @@ var Tutorial = (function ($,catRequest,RM,Timer,Account) {
                 clickOnce($(this).find('img').click());
             });
 
-
-            //只点一次
             $('#license').find('input').each(function(){ //点 同意条款
                 clickOnce($(this));
             });
@@ -33,24 +31,59 @@ var Tutorial = (function ($,catRequest,RM,Timer,Account) {
                 clickOnce($(this));
             });
 
-            $('#form_name').each(function(){//游戏角色名
-                if(currentAccount['gameName']&&currentAccount['gameName']!==''){
-                    $(this).val(currentAccount['gameName']);
-                    //$('#form-form').find('#form_name')
-                }
-            });
-
-
             $('#form_mapid').each(function(){   //选国家
-                var n=0;
-                n = parseInt(Math.random()*15);
-                $(this).val(n);
+
+                setTimeout(function(){
+                    var n=0;
+                    n = parseInt(Math.random()*15);
+                    $(this).val(n);
+
+                    $('#form_name').each(function(){//游戏角色名
+                        if(currentAccount['gameName']&&currentAccount['gameName']!==''){
+                            $(this).val(currentAccount['gameName']);
+                            //$('#form-form').find('#form_name')
+
+                            //todo 增加判断是否触发了事件
+                            //todo 增加延迟执行
+                            $('#nyamon'+n).click();
+                            clickOnce($('#nyamon'+n));
+
+                            setTimeout(function(){
+                                $('#next-button.next-button').each(function(){
+                                    clickOnce($(this));
+                                    $('#neko-alert-ok-button.neko-alert-button.neko-button').each(function(){  //选国家页 的“继续”按钮
+                                        // console.log('选国家 找到“继续”按钮');
+
+                                        clickOnce($(this));
+                                        nextStep();
+
+
+
+                                        //$(this).mousedown();
+                                        //clickOnce($(this));
+                                    });
+
+
+                                });
+                            },100);
+
+
+
+
+
+                        }
+                    });
+
+
+
+                },2000);
+
+
+
+
             });
 
-            $('#next-button').find('img').each(function(){  //选国家页 的“继续”按钮
-                console.log('选国家 找到“继续”按钮');
-                clickOnce($(this));
-            });
+
         },
         '##新手开始游戏##1': function () {
             console.log('新手开始游戏');
@@ -215,10 +248,19 @@ var Tutorial = (function ($,catRequest,RM,Timer,Account) {
 
     };
 
-    function clickOnce($tar){
-        if($tar.prop('onceclicked')){
-            $tar.attr('onceclicked');
-            $tar.click();
+    function clickOnce($tar,delay){
+        var _delay=delay||0;
+        if(_delay>0){
+            console.log('______');
+        }
+        if($tar.data('onceclicked')!==undefined){
+            $tar.data('onceclicked',"true");
+            setTimeout(function(){
+                $tar.click();
+            },_delay);
+
+        }else{
+            console.log($tar,'has clicked');
         }
 
     }
@@ -227,7 +269,11 @@ var Tutorial = (function ($,catRequest,RM,Timer,Account) {
     function nextStep(){
         currentStep++;
         currentAccount['step']=currentStep;
+        Account.saveAccount(currentAccount);
     }
+
+
+
 
     /**
      *

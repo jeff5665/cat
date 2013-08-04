@@ -1,4 +1,4 @@
-﻿var userConfig = (function(){
+﻿var userConfig = (function(){//游戏的用户配置
     if (localStorage['UserConfig'] === undefined) {
         localStorage['UserConfig'] = JSON.stringify(defaultConfig);
         return defaultConfig;
@@ -9,7 +9,7 @@
 
 
 
-var accountList=(function(){
+var accountList=(function(){//帐号列表
     if (localStorage['AccountList'] === undefined) {
         return {};
     } else {
@@ -17,7 +17,7 @@ var accountList=(function(){
     }
 })();
 
-var currentAccountName=(function(){
+var currentAccountName=(function(){ //当前帐号名
     if (localStorage['currentName'] === undefined) {
         return {};
     } else {
@@ -26,7 +26,7 @@ var currentAccountName=(function(){
 })();
 
 
-var currentAccount=(function(currentAccountName,accountList){
+var currentAccount=(function(currentAccountName,accountList){//当前帐号
     console.log('currentName!!!!!',currentAccountName);
     if(currentAccountName!==''){
         return accountList[currentAccountName]||{};
@@ -74,17 +74,18 @@ var currentAccount=(function(currentAccountName,accountList){
                 userConfig.battle = req.battle;
                 localStorage['GameConfig'] = JSON.stringify(userConfig);
             },*/
-
+            getCurrentAccountName:function(req, sender, sendResponse){
+               sendResponse(currentAccountName);
+            },
             updateAccount:function(req, sender, sendResponse){//为测试
+                console.log('updateAccount');
                 currentAccount=req.account;
                 $.extend(accountList,currentAccount);
                 localStorage['AccountList'] = JSON.stringify(accountList);
                 sendResponse({status:'success'});
             },
-            getAccount:function(req, sender, sendResponse){//未测试
-                console.log('getAccount');
-                console.log(currentAccount);
-                sendResponse(currentAccount);
+            getAccount:function(req, sender, sendResponse){
+                sendResponse({accountName:currentAccountName,data:currentAccount});
             },
 
             getUserConfig: function (req, sender, sendResponse) {
