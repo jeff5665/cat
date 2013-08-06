@@ -1,4 +1,5 @@
 var Timer = (function () {
+    'use strict';
     var interval = 1000;//Timer内部执行间隔时间，默认1000毫秒
     var funcList = [];//内部执行函数列表
     var countDown={
@@ -87,5 +88,5 @@ var Timer = (function () {
                  countDown.times=n;
         }
 
-    }
+    };
 })();

@@ -1,5 +1,5 @@
 var SwapMyCookieMessage=(function(){
-
+    'use strict';
     /**
      * 返回message
      * @returns {{}}
@@ -30,5 +30,5 @@ var SwapMyCookieMessage=(function(){
 
     return {
         getMessage:getMessage
-    }
+    };
 })();

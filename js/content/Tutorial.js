@@ -1,4 +1,5 @@
 var Tutorial = (function ($,catRequest,RM,Timer,Account) {
+    'use strict';
     var gameMustData=(function(){
         var st=(location.href.match(/st=([0-9a-zA-Z]+)#rpctoken/)||[])[1];
         if(st===undefined){
@@ -6,7 +7,7 @@ var Tutorial = (function ($,catRequest,RM,Timer,Account) {
         }
         return {
             st:st
-        }
+        };
     })();
     var reqUrl='http://nyashindig.86game.com/shindig/gadgets/makeRequest';
     var _config={};
@@ -35,7 +36,7 @@ var Tutorial = (function ($,catRequest,RM,Timer,Account) {
 
                 setTimeout(function(){
                     var n=0;
-                    n = parseInt(Math.random()*15);
+                    n = parseInt(Math.random()*15,10);
                     $(this).val(n);
 
                     $('#form_name').each(function(){//游戏角色名
@@ -284,7 +285,7 @@ var Tutorial = (function ($,catRequest,RM,Timer,Account) {
             setTimeout(function(){
                 $('#villagename').each(function(){
                     gameName=$(this).find('a').text();
-                    if(gameName!=''){
+                    if(gameName!==''){
                         account['gameName']=gameName;
                     }
                 });
@@ -329,7 +330,7 @@ var Tutorial = (function ($,catRequest,RM,Timer,Account) {
 
             return dtd.promise();
         }
-    }
+    };
 
 
 })(jQuery,CatRequest,RouteManger,Timer,Account);

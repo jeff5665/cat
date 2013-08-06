@@ -1,4 +1,5 @@
 ﻿var GamePlugn=(function($,U,GD,RM,Timer,CatRequest,CatCount,Tutorial){
+    'use strict';
     //$ = Jquery
     //U = JUtil
     //GD = GameData
@@ -11,7 +12,7 @@
         }
         return {
             st:st
-        }
+        };
     })();
     CatRequest.init(GameMustData);
 
@@ -168,11 +169,11 @@
                         console.log('已有建筑在造');
                     }
                 });
-            })
+            });
         }else{
-            console.log('自动升级建筑未勾选')
+            console.log('自动升级建筑未勾选');
         }
-    }
+    };
 
     /**
      * 自动建造建筑(新手)
@@ -193,18 +194,18 @@
                         console.log('已有建筑在造(新手)');
                     }
                 });
-            })
+            });
         }else{
-            console.log('自动建筑(新手)未勾选')
+            console.log('自动建筑(新手)未勾选');
         }
-    }
+    };
 
     /**
      * 自动升级卡片
      */
     var goUpdateCard=function(){
         console.log('@goCard');
-        if(gameConfig.card.cardUpdate===true&&gameConfig.card.cardName!=''&&gameConfig.card.updateAddress!=''&&gameConfig.card.minResources!=''){
+        if(gameConfig.card.cardUpdate===true&&gameConfig.card.cardName!==''&&gameConfig.card.updateAddress!==''&&gameConfig.card.minResources!==''){
             $('#villagemap').each(function(){//在村庄时
                 if(!hasCardResources()){     //升级卡片资源不足
                     return false;
@@ -222,12 +223,12 @@
                     return false;
                 }
                 $('.reserve-group').find('.reserve-group2').each(function(){
-                    _card=$(this).find('img.reserve-face').attr('class').substr(12,7)
+                    _card=$(this).find('img.reserve-face').attr('class').substr(12,7);
                     _card_name=$(this).find('img.reserve-face').attr('alt');
-                    if(_card_name==cardName){               //岛津家喵        梅姬喵
+                    if(_card_name===cardName){               //岛津家喵        梅姬喵
                         card_id=_card;
                     }
-                })
+                });
                 if(card_id===''){
                     console.log('配置的武将不存在');
                     return false;
@@ -242,9 +243,9 @@
                     console.log('已有卡片在升级');
                 }
 
-            })
+            });
         }else{
-            console.log('自动升级卡片未勾选或关键配置参数为空')
+            console.log('自动升级卡片未勾选或关键配置参数为空');
         }
 
     }
@@ -341,7 +342,7 @@
      * @returns {boolean}
      */
     var hasFood=function(){
-        var food=parseInt($('#element_food').text());
+        var food=parseInt($('#element_food').text(),10);
         if(food>gameConfig.battle.minFood){
             return true;
         }else{
@@ -371,7 +372,7 @@
             console.log('升级卡片资源不足');
             return false;
         }
-    }
+    };
 
 
     /**
@@ -388,13 +389,13 @@
         var count=0;              //测试代码
         var buildTypes='';        //要自动升级的建筑类型
         if(gameConfig.build.Granary===true){           //检测配置文件
-            buildTypes+='.type16,'
+            buildTypes+='.type16,';
         }
         if(gameConfig.build.Paddy===true){
-            buildTypes+='.type17,'
+            buildTypes+='.type17,';
         }
         if(gameConfig.build.Treasury===true){
-            buildTypes+='.type02,'
+            buildTypes+='.type02,';
         }
         buildTypes=buildTypes.substr(0,buildTypes.length-1);
 
@@ -407,15 +408,15 @@
                     var searchIndex=_alt.indexOf(facilityObj['typeName']);
                     var currentLV=0;           //当前建筑等级
                     if(searchIndex>=0){//找到
-                        currentLV= parseInt(_alt.match(/(\d+)/)[1]);         //获取当前检测到的建筑等级
+                        currentLV= parseInt(_alt.match(/(\d+)/)[1],10);         //获取当前检测到的建筑等级
 
                         if(minLV>currentLV){//寻找最低等级建筑
                             minLV=currentLV;
-                            targetMapId=_map_id
+                            targetMapId=_map_id;
                         }
 
                         if(currentLV===9){
-                            console.log("建筑都已达到LV9最高等级")
+                            console.log("建筑都已达到LV9最高等级");
                             return false;
                         }
 
@@ -441,7 +442,7 @@
         }
 
 
-    }
+    };
 
     /**
      * 检测建造建筑资源是否足够
@@ -473,7 +474,7 @@
         count++;                              //测试代码
         console.log(count);
         return false;
-    }
+    };
 
 
     /**
@@ -568,7 +569,7 @@
 
     return {
         init:init
-    }
+    };
 
 })(jQuery,JUtil,GameData,RouteManger,Timer,CatRequest,CatCount,Tutorial);
 

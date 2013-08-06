@@ -1,4 +1,5 @@
 var CatCount=(function($,SwapMyCookieMessage){
+    'use strict';
     /**
      * 初始化游戏中的名字
      * @returns {*}
@@ -19,7 +20,7 @@ var CatCount=(function($,SwapMyCookieMessage){
                 if(_alt.indexOf(value)>-1){
                     builded.push(_alt);
                 }
-            })
+            });
         });
         return builded.sort();
     }
@@ -29,11 +30,11 @@ var CatCount=(function($,SwapMyCookieMessage){
      */
     function getResources(){
         var resources=[];
-        resources.push(parseInt($("#element_fire").text()));
-        resources.push(parseInt($("#element_earth").text()));
-        resources.push(parseInt($("#element_wind").text()));
-        resources.push(parseInt($("#element_water").text()));
-        resources.push(parseInt($("#element_sky").text()));
+        resources.push(parseInt($("#element_fire").text(),10));
+        resources.push(parseInt($("#element_earth").text(),10));
+        resources.push(parseInt($("#element_wind").text(),10));
+        resources.push(parseInt($("#element_water").text(),10));
+        resources.push(parseInt($("#element_sky").text(),10));
         return resources;
     }
 
@@ -56,7 +57,7 @@ var CatCount=(function($,SwapMyCookieMessage){
         var trade=[];
         $('#content').find('div.left[style="background:#FFFAE2;"]').each(function(){
             if($(this).find('img.card-trade').length>0)
-            {trade.push('F')} //F表示不可交易
+            {trade.push('F');} //F表示不可交易
             else
             {trade.push('T');} //T表示可交易
         });
@@ -75,9 +76,9 @@ var CatCount=(function($,SwapMyCookieMessage){
                 var _src=$(this).attr('src');
                 _src=_src.toString().substr(_src.length-5,1);
                 hp1.push(_src);
-            })
+            });
             hp.push(hp1.join(""));
-        })
+        });
         return hp.toString();
     }
 
@@ -115,6 +116,6 @@ var CatCount=(function($,SwapMyCookieMessage){
         initGameName:initGameName,
         getBuilded:getBuilded,
         getResources:getResources
-    }
+    };
 
 })(jQuery,SwapMyCookieMessage);

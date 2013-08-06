@@ -1,5 +1,5 @@
-var RouteManger=(function(){
-
+var RouteManger=(function($){
+    'use strict';
 
 
 
@@ -27,7 +27,7 @@ var RouteManger=(function(){
             changeRoute($(this).attr('href'));
         }).on('mouseup','#work-head',function(e){
              var arr=['培养武将','出征武将','保管武将','名将谱'];
-             var str=(e.target.innerText.match(/\>([^\<]+)</)||[])[1];//
+             var str=(e.target.innerText.match(/>([^<]+)</)||[])[1];//
                 if($.inArray(str,arr)>-1){
                     changeRoute(str);
                 }
@@ -47,8 +47,8 @@ var RouteManger=(function(){
      * 考虑到route中可能有空格或者,暂时不支持使用,或者空格分割，对两个route注册同一个func
      */
     var register=function(route,func,type){
-        var type=this.type||'after';
-        if(type==='after'){
+        var _type=this.type||'after';
+        if(_type==='after'){
             actionList[route]=func;
         }else{
             beforeChangePageActionList[route]=func;
@@ -65,7 +65,7 @@ var RouteManger=(function(){
         if(typeof actionList[currentRoute]==="function"){
             actionList[currentRoute]();
         }else{
-            console.log('route:',currentRoute,'   no action registered')
+            console.log('route:',currentRoute,'   no action registered');
         }
 
         if(typeof  beforeChangePageActionList[currentRoute]==="function"){
@@ -100,6 +100,6 @@ var RouteManger=(function(){
         register:register,
         actionList:actionList,
         changeRoute:changeRoute
-    }
+    };
 
 })(jQuery);

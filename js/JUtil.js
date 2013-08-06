@@ -1,13 +1,14 @@
 var JUtil=(function(){
+    'use strict';
     var getUrlParams=function() {
         var sUrl = location.href;
         var str = sUrl.split("?");
         var pstr;
         var params = [];
         var i,ar;
-        if (str.length == 1) pstr = '';
-        else pstr = str[1];
-        if (pstr != '') {
+        if (str.length === 1) {pstr = '';}
+        else {pstr = str[1];}
+        if (pstr !== '') {
             ar = pstr.split(/[&=]/);
             for(i=0;i<ar.length;i+=2) {
                 params[ar[i]] = ar[i+1];
@@ -16,9 +17,9 @@ var JUtil=(function(){
         return params;
     };
     var getUnsafeWindow=function() {
-        if (typeof(this.unsafeWindow) != "undefined") {//Greasemonkey, Scriptish, Tampermonkey, etc.
+        if (typeof(this.unsafeWindow) !== "undefined") {//Greasemonkey, Scriptish, Tampermonkey, etc.
             return this.unsafeWindow;
-        } else if (typeof(unsafeWindow) != "undefined" && this === window && unsafeWindow === window) {//Google Chrome natively
+        } else if (typeof(unsafeWindow) !== "undefined" && this === window && unsafeWindow === window) {//Google Chrome natively
             var node = document.createElement("div");
             node.setAttribute("onclick", "return window;");
             return node.onclick();
@@ -75,12 +76,12 @@ var JUtil=(function(){
         var targetStr=_format.replace('yyyy',year).replace('mm',month).replace('dd',day).replace('hh',hour).replace('mm',minute).replace('ss',second);
         // var targetStr = year + '-' + month + '-' + day + ' '  + hour + ':' + minute + ':' + second;
         return targetStr;
-    }
+    };
 
     return {
         getUrlParams:getUrlParams,
         unsafeWindow:getUnsafeWindow,
         getTimeStr:getTimeStr,
         unique:unique
-    }
+    };
 })();

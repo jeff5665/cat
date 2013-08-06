@@ -1,4 +1,5 @@
 var Account=(function(){
+    'use strict';
     var currentAccountName;
     function init(){
         //异步获取当前帐号名
@@ -24,12 +25,14 @@ var Account=(function(){
                 _account[currentAccountName]=account;
                 chrome.runtime.sendMessage({action:'updateAccount',account:_account},function(data){
                     if(data.status==='success'){
-                        _callback(account['step']);
+                        _callback(account.step);
                         console.log('step ',account.step,' update success');
                     }
                 });
+            }else{
+                console.warn('currentAccountName 未初始化');
             }
         }
-    }
+    };
 
-})($);
+})();

@@ -1,7 +1,8 @@
 /**
  * 封装信猫请求
  */
-var CatRequest=(function(){
+var CatRequest=(function($){
+        'use strict';
         var gameMustData={};
         return {
             init:function(data){
@@ -212,8 +213,8 @@ var CatRequest=(function(){
                     }
                 });
             }
-        }
+        };
     }
 
 
-)();
+)(jQuery);

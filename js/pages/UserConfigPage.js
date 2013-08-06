@@ -1,23 +1,24 @@
 (function($,defaultConfig,JUtil){
+    'use strict';
     $(function(){
         var userConfig={};
         var accountList={};
 
-        if(localStorage['UserConfig']){
-            userConfig = JSON.parse(localStorage['UserConfig']);
+        if(localStorage.UserConfig){
+            userConfig = JSON.parse(localStorage.UserConfig);
             if(userConfig.version!==defaultConfig.version){
                 userConfig = defaultConfig;
-                localStorage['UserConfig'] = JSON.stringify(defaultConfig);
+                localStorage.UserConfig = JSON.stringify(defaultConfig);
             }
         }else{
             userConfig = defaultConfig;
-            localStorage['UserConfig'] = JSON.stringify(defaultConfig);
+            localStorage.UserConfig = JSON.stringify(defaultConfig);
         }
 
-        if(localStorage['AccountList']){
+        if(localStorage.AccountList){
             accountList = JSON.parse(localStorage['AccountList']);
         }else{
-            localStorage['AccountList'] = JSON.stringify(accountList);
+            localStorage.AccountList = JSON.stringify(accountList);
         }
 
 
@@ -200,9 +201,9 @@
                     saveConfig();
                 console.log(cardAttr);
                     if(cardAttr===userConfig.card.cardAttr){
-                        $(this).on('click','click')
+                        $(this).on('click','click');
                     }
-                })
+                });
         });
 
 
@@ -303,8 +304,8 @@
                var tmpAccount={};
                var accountName=$tr.find('input').eq(0).val();
                 tmpAccount[accountName]={};
-                tmpAccount[accountName]['gameName']=$tr.find('input').eq(1).val();
-                tmpAccount[accountName]['step']=$tr.find('input').eq(2).val();
+                tmpAccount[accountName].gameName=$tr.find('input').eq(1).val();
+                tmpAccount[accountName].step=$tr.find('input').eq(2).val();
 
                $.extend(accountList,tmpAccount);
                saveAccountList();

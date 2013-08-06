@@ -1,43 +1,43 @@
-﻿var userConfig = (function(){//游戏的用户配置
-    if (localStorage['UserConfig'] === undefined) {
-        localStorage['UserConfig'] = JSON.stringify(defaultConfig);
-        return defaultConfig;
-    } else {
-        return JSON.parse(localStorage['UserConfig']);
-    }
-})();
-
-
-
-var accountList=(function(){//帐号列表
-    if (localStorage['AccountList'] === undefined) {
-        return {};
-    } else {
-        return JSON.parse(localStorage['AccountList']);
-    }
-})();
-
-var currentAccountName=(function(){ //当前帐号名
-    if (localStorage['currentName'] === undefined) {
-        return {};
-    } else {
-        return JSON.parse(localStorage['currentName']);
-    }
-})();
-
-
-var currentAccount=(function(currentAccountName,accountList){//当前帐号
-    console.log('currentName!!!!!',currentAccountName);
-    if(currentAccountName!==''){
-        return accountList[currentAccountName]||{};
-    }else{
-        return {};
-    }
-})(currentAccountName,accountList);
-
-
+﻿
 
 (function($,defaultConfig){
+    'use strict';
+    var userConfig = (function(){//游戏的用户配置
+        if (localStorage['UserConfig'] === undefined) {
+            localStorage['UserConfig'] = JSON.stringify(defaultConfig);
+            return defaultConfig;
+        } else {
+            return JSON.parse(localStorage['UserConfig']);
+        }
+    })();
+
+    var accountList=(function(){//帐号列表
+        if (localStorage['AccountList'] === undefined) {
+            return {};
+        } else {
+            return JSON.parse(localStorage['AccountList']);
+        }
+    })();
+
+    var currentAccountName=(function(){ //当前帐号名
+        if (localStorage['currentName'] === undefined) {
+            return {};
+        } else {
+            return JSON.parse(localStorage['currentName']);
+        }
+    })();
+
+
+    var currentAccount=(function(currentAccountName,accountList){//当前帐号
+        console.log('currentName!!!!!',currentAccountName);
+        if(currentAccountName!==''){
+            return accountList[currentAccountName]||{};
+        }else{
+            return {};
+        }
+    })(currentAccountName,accountList);
+
+
     $(function () {
         chrome.extension.onConnectExternal.addListener(function(port) {//侦听来自其他扩展的信息  (来自cookieSwap的信息)
             port.onMessage.addListener(function(cookieSwapMsg) {
