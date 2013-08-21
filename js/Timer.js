@@ -14,6 +14,27 @@ var Timer = (function () {
 
 
 
+    function init(){
+        if(countDown.times!==0){//需要执行倒计时
+            countDown.currentTime--;
+            if(countDown.currentTime<0){//倒计时时间到，执行倒计时函数列表
+                if(countDown.times>0){//非无限执行，需要执行次数--
+                    countDown.times--;
+                }
+                countDown.execTimes++;
+                countDown.currentTime=countDown.countTotalTime-1;
+                countDown.funcList.forEach(function(func){//遍历执行
+                    func(countDown.execTimes);
+                });
+            }
+        }
+
+        funcList.forEach(function(func){//遍历执行内部函数列表
+            func(countDown.currentTime);
+        });
+        timerId=setTimeout(init, interval);
+    }
+
     return {
         /**
          * 重复执行funcList中的函数
@@ -21,27 +42,9 @@ var Timer = (function () {
          */
         run: function () {
             countDown.currentTime=countDown.countTotalTime;
-
+            var _this=this;
             timerId=setTimeout(function () {
-                //先做倒计时
-                if(countDown.times!==0){//需要执行倒计时
-                    countDown.currentTime--;
-                    if(countDown.currentTime<0){//倒计时时间到，执行倒计时函数列表
-                        if(countDown.times>0){//非无限执行，需要执行次数--
-                            countDown.times--;
-                        }
-                        countDown.execTimes++;
-                        countDown.currentTime=countDown.countTotalTime-1;
-                        countDown.funcList.forEach(function(func){//遍历执行
-                            func(countDown.execTimes);
-                        });
-                    }
-                }
-
-                funcList.forEach(function(func){//遍历执行内部函数列表
-                    func(countDown.currentTime);
-                });
-                timerId=setTimeout(arguments.callee, interval);
+                init();
             }, interval);
         },
         /**

@@ -25,6 +25,12 @@ var Tutorial = (function ($,catRequest,RM,Timer,Account) {
                 clickOnce($(this).find('img').click());
             });
 
+            $('div#start-button').each(function(){//点开始游戏
+                console.log('find license');
+                clickOnce($(this).find('img').click());
+            });
+
+
             $('#license').find('input').each(function(){ //点 同意条款
                 clickOnce($(this));
             });
@@ -49,7 +55,8 @@ var Tutorial = (function ($,catRequest,RM,Timer,Account) {
                             $('#nyamon'+n).click();
                             clickOnce($('#nyamon'+n));
 
-                            setTimeout(function(){
+                            setTimeout(function(){//todo 解决这里的BUG 优先级！！！！！！！！！
+                                clickOnce($('div#next-button'));
                                 $('#next-button.next-button').each(function(){
                                     clickOnce($(this));
                                     $('#neko-alert-ok-button.neko-alert-button.neko-button').each(function(){  //选国家页 的“继续”按钮

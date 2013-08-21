@@ -13,8 +13,10 @@ var Account=(function(){
         create:function(){//创建一个新的Account实例
         },
         getAccount:function(callback){//异步请求background后执行callback, callback参数为 帐号信息
+            console.log('getAccount');
             chrome.runtime.sendMessage({action:'getAccount'},function(result){
                 currentAccountName=result.accountName;
+                console.log('errrrrr',result);
                 callback(result.data);
             });
         },

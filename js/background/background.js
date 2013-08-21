@@ -21,7 +21,9 @@
 
     var currentAccountName=(function(){ //当前帐号名
         if (localStorage['currentName'] === undefined) {
-            return {};
+            //todo 重新发送请求问cookieswap拿当前账号名
+
+            return '';
         } else {
             return JSON.parse(localStorage['currentName']);
         }
@@ -49,7 +51,7 @@
                     localStorage['AccountList'] = JSON.stringify(accountList);
                 }
                 localStorage['currentName'] = JSON.stringify(accountName);
-                console.log(accountName,accountList);
+                console.log('save current name:',accountName,accountList);
 
                 currentAccount=accountList[accountName];
                 currentAccount['accountName']=accountName;
@@ -110,8 +112,10 @@
             },
             reloadAccountList:function(req,sender,sendResponse){
                 console.log('reloadAccountList');
-               accountList =JSON.parse(localStorage['AccountList']) ;
-               sendResponse('background:: reloadAccountList 成功');
+                sendResponse('background:: reloadAccountList 成功');
+                window.location.reload();
+                accountList =JSON.parse(localStorage['AccountList']) ;
+
             }
 
         };
